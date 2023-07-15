@@ -1,0 +1,76 @@
+* {
+  font-family: sans-serif;
+}
+
+
+
+nav {
+  text-align: left;
+  background: #ee9972;
+  padding: 20px;
+}
+
+nav a {
+  color: #edefee;
+  text-decoration: none;
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+/* 
+.row,
+.col {
+  text-align: center;
+
+} */
+
+/* h1 {
+  margin-top: 20px;
+} */
+/* 
+div {
+  text-align: center; */
+/* } */
+
+/* 
+input {
+
+  font-size: 20px;
+  padding: 20px;
+  width: 25%;
+  font-family: Verdana, sans-serif;
+}
+
+ul {
+  text-align: center;
+}
+
+
+
+
+
+*/
+
+/* .row,
+.row input {
+  margin: 20px;
+  width: 50%;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input {
+  text-align: center;
+}
+
+.border-success:disabled {
+  background: 'green'
+}
+
+img {
+  text-align: center;
+}
