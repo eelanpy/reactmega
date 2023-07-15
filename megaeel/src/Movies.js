@@ -3,8 +3,131 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Image from 'react-bootstrap/Image';
 import { useEffect, useState } from 'react';
+import Card from 'react-bootstrap/Card'
+import React from 'react';
+
+
+function removeMatchedDuplicates(list) {
+    const mySet1 = new Set();
+    const dict = {};
+    for(let i = 0; i < list.length; i++) {
+        if(dict[list[i][0]] == undefined)  {
+            dict[list[i][0]] = [list[i][1],list[i][2],list[i][3],list[i][4],1]
+        } else {
+            dict[list[i][0]][4] += 1
+        }
+    }
+
+    console.log(dict)
+    mySet1.add([]);
+    console.log(mySet1);
+    list = []
+    for (let i of Object.keys(dict))  {
+        list.push([i,dict[i][0],dict[i][1],dict[i][2]])
+    }
+
+
+    // getMovieData(list[0][0], list[0][1])
+    const list2 = [];
+    // useEffect(() => {
+    //     async function getMovieData(link,name) {
+    //         var url = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' + link + '&name=' + name;
+    //         const response = await fetch(
+    //             url
+    //         );
+    //         const data = await response.json();
+    //         return [Object.values(data)];
+    //     }
+    //     async function pushdata() {
+    //         for(let i = 0; i < list.length; i++) {
+        
+    //             list2.push(await getMovieData(list[i][0], list[i][1]));
+    //              console.log(list2);   
+                
+            
+    //         }
+    //     }
+    //     pushdata()
+        return list
+
+    // })
+
+    
+    
+    
+        
+    
+
+
+
+    console.log(list2);
+
+    return list2;
+}
+
+function Render(props) {
+    
+    console.log(props);
+    var matched1 =[];
+    // const [matched,setMatched] = useState([])
+    // // useEffect(() => {
+    // //     async function hello() {
+    // //         setMatched(removeMatchedDuplicates(props.matched))
+    // //     }  
+    // //     hello()
+    // //     console.log(matched);
+    // // })
+    // console.log(removeMatchedDuplicates(props.matched)[0]);
+  
+    
+
+        
+        
+
+    
+     // 1) word[1]: Link
+     // 2) word[2]: Budget
+     // 3) word[0]: Name
+     // 3) word[3]: Box Office
+
+                    // <button key={idx}><br/>{word[1]}</button>
+                    // <button>{word[2]}</button>
+                    // <button>{word[0]}</button>
+                    // <button>{word[3]}</button>
+     return (
+        <>
+            <div className="row justify-content-md-center">
+            <div className="col-sm-4">
+            {/* {matched} */}
+            {removeMatchedDuplicates(props.matched).map((word) => (
+                <>
+                    
+                    <div className="card mb-2">
+                        
+                        <div className="card-body text-center">
+                            <h5 className="card-title">{word[0]}:</h5>
+                            <p className="card-text">Budget: {word[2]}</p>
+                            <p className="card-text">Box-Office: {word[3]}</p>
+                            For more information: <a href={word[1]} className="btn btn-primary">{word[0]}</a>
+                        </div>
+                    </div>
+                    
+                </>
+            ))}
+            </div>
+            </div>
+        </>
+    )
+     
+    //  console.log(matched1);
+    
+    
+    // 
+}
+
 
 function Movies () {
+    document.title = 'Box Office & Budget Finder'
     
     const [movie, setMovie] = useState('')
     // const [matched,setMatched] = useState([])
@@ -59,6 +182,7 @@ function Movies () {
                         const data2 = await response2.json();
                         // return [Object.values(data)];
                         console.log(data2["budget"]);
+                        console.log(data2["box-office"]);
                         matched.push([j,data[i][j],data2["budget"],data2["box-office"]]);
                         console.log(matched);
                         
@@ -124,7 +248,7 @@ function Movies () {
                 </form>
             </Col>
         </Row>
-        <Card matched={fndMovies}/>
+        <Render matched={fndMovies}></Render>
         {/* {matched}
         {matched.map((word,key)=> (
             <button>{word[1]}</button>
@@ -133,103 +257,5 @@ function Movies () {
         )
 }
 
-function removeMatchedDuplicates(list) {
-    const mySet1 = new Set();
-    const dict = {};
-    for(let i = 0; i < list.length; i++) {
-        if(dict[list[i][0]] == undefined)  {
-            dict[list[i][0]] = [list[i][1],list[i][2],list[i][3],list[i][4],1]
-        } else {
-            dict[list[i][0]][4] += 1
-        }
-    }
-
-    console.log(dict)
-    mySet1.add([]);
-    console.log(mySet1);
-    list = []
-    for (let i of Object.keys(dict))  {
-        list.push([i,dict[i][0],dict[i][2],dict[i][3],dict[i][4]])
-    }
-
-
-    // getMovieData(list[0][0], list[0][1])
-    const list2 = [];
-    // useEffect(() => {
-    //     async function getMovieData(link,name) {
-    //         var url = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' + link + '&name=' + name;
-    //         const response = await fetch(
-    //             url
-    //         );
-    //         const data = await response.json();
-    //         return [Object.values(data)];
-    //     }
-    //     async function pushdata() {
-    //         for(let i = 0; i < list.length; i++) {
-        
-    //             list2.push(await getMovieData(list[i][0], list[i][1]));
-    //              console.log(list2);   
-                
-            
-    //         }
-    //     }
-    //     pushdata()
-        return list
-
-    // })
-
-    
-    
-    
-        
-    
-
-
-
-    console.log(list2);
-
-    return list2;
-}
-
-function Card(props) {
-    
-    console.log(props);
-    var matched1 =[];
-    const [matched,setMatched] = useState([])
-    // useEffect(() => {
-    //     async function hello() {
-    //         setMatched(removeMatchedDuplicates(props.matched))
-    //     }  
-    //     hello()
-    //     console.log(matched);
-    // })
-    console.log(removeMatchedDuplicates(props.matched)[0]);
-  
-    
-
-        
-        
-
-    
-     
-     return (
-        <>
-            
-            {/* {matched} */}
-            {removeMatchedDuplicates(props.matched).map((word,idx) => (
-                <>
-                <button key={idx}><br/>{word[1]}</button>
-                <button>{word[2]}</button>
-                <button>{word[0]}</button>
-                </>
-            ))}
-        </>
-    )
-     
-     console.log(matched1);
-    
-    
-    // 
-}
 
 export default Movies;
