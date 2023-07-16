@@ -108,7 +108,7 @@ function Render(props) {
                             <h5 className="card-title">{word[0]}:</h5>
                             <p className="card-text">Budget: {word[2]}</p>
                             <p className="card-text">Box-Office: {word[3]}</p>
-                            For more information: <a href={word[1]} className="btn btn-primary">{word[0]}</a>
+                            <a href={word[1]} className="btn btn-primary" target='_blank'>More Details</a>
                         </div>
                     </div>
                     
