@@ -5,50 +5,53 @@ import Image from 'react-bootstrap/Image';
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import React from 'react';
+import Spinner from 'react-bootstrap/Spinner'
 
 
-function removeMatchedDuplicates(list) {
-    const mySet1 = new Set();
-    const dict = {};
-    for(let i = 0; i < list.length; i++) {
-        if(dict[list[i][0]] == undefined)  {
-            dict[list[i][0]] = [list[i][1],list[i][2],list[i][3],list[i][4],1]
-        } else {
-            dict[list[i][0]][4] += 1
-        }
-    }
-
-    console.log(dict)
-    mySet1.add([]);
-    console.log(mySet1);
-    list = []
-    for (let i of Object.keys(dict))  {
-        list.push([i,dict[i][0],dict[i][1],dict[i][2]])
-    }
 
 
-    // getMovieData(list[0][0], list[0][1])
-    const list2 = [];
-    // useEffect(() => {
-    //     async function getMovieData(link,name) {
-    //         var url = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' + link + '&name=' + name;
-    //         const response = await fetch(
-    //             url
-    //         );
-    //         const data = await response.json();
-    //         return [Object.values(data)];
-    //     }
-    //     async function pushdata() {
-    //         for(let i = 0; i < list.length; i++) {
+// function removeMatchedDuplicates(list) {
+//     const mySet1 = new Set();
+//     const dict = {};
+//     for(let i = 0; i < list.length; i++) {
+//         if(dict[list[i][0]] == undefined)  {
+//             dict[list[i][0]] = [list[i][1],list[i][2],list[i][3],list[i][4],1]
+//         } else {
+//             dict[list[i][0]][4] += 1
+//         }
+//     }
+
+    
+//     mySet1.add([]);
+    
+//     list = []
+//     for (let i of Object.keys(dict))  {
+//         list.push([i,dict[i][0],dict[i][1],dict[i][2]])
+//     }
+
+
+//     // getMovieData(list[0][0], list[0][1])
+//     const list2 = [];
+//     // useEffect(() => {
+//     //     async function getMovieData(link,name) {
+//     //         var url = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' + link + '&name=' + name;
+//     //         const response = await fetch(
+//     //             url
+//     //         );
+//     //         const data = await response.json();
+//     //         return [Object.values(data)];
+//     //     }
+//     //     async function pushdata() {
+//     //         for(let i = 0; i < list.length; i++) {
         
-    //             list2.push(await getMovieData(list[i][0], list[i][1]));
-    //              console.log(list2);   
+//     //             list2.push(await getMovieData(list[i][0], list[i][1]));
+//     //              console.log(list2);   
                 
             
-    //         }
-    //     }
-    //     pushdata()
-        return list
+//     //         }
+//     //     }
+//     //     pushdata()
+//         return list
 
     // })
 
@@ -59,16 +62,12 @@ function removeMatchedDuplicates(list) {
     
 
 
-
-    console.log(list2);
-
-    return list2;
-}
+// }
 
 function Render(props) {
     
-    console.log(props);
-    var matched1 =[];
+    // console.log(props);
+    // var matched1 =[];
     // const [matched,setMatched] = useState([])
     // // useEffect(() => {
     // //     async function hello() {
@@ -78,7 +77,7 @@ function Render(props) {
     // //     console.log(matched);
     // // })
     // console.log(removeMatchedDuplicates(props.matched)[0]);
-  
+    console.log(props.isLoading);
     
 
         
@@ -96,26 +95,31 @@ function Render(props) {
                     // <button>{word[3]}</button>
      return (
         <>
+
             <div className="row justify-content-md-center">
             <div className="col-sm-4">
             {/* {matched} */}
-            {removeMatchedDuplicates(props.matched).map((word) => (
+            {props.matched.map((word) => (
                 <>
                     
-                    <div className="card mb-2">
-                        
+                    
+                        <div className="card border-primary mb-2">
+
                         <div className="card-body text-center">
-                            <h5 className="card-title">{word[0]}:</h5>
-                            <p className="card-text">Budget: {word[2]}</p>
-                            <p className="card-text">Box-Office: {word[3]}</p>
+                            <strong className="card-title" style={{fontSize: "2rem"}}>{word[0]}:</strong>
+                            <p className="card-text" style={{padding: 0, margin: 0,fontSize: "1.5rem"}}>Budget: {word[2]}</p>
+                            <p className="card-text" style={{padding: 0, margin: 0, fontSize: "1.5rem"}}>Box-Office: {word[3]}</p>
+
                             <a href={word[1]} className="btn btn-primary" target='_blank'>More Details</a>
                         </div>
-                    </div>
+                        </div>
+                    
                     
                 </>
             ))}
             </div>
             </div>
+            
         </>
     )
      
@@ -142,7 +146,9 @@ function Movies () {
 
     }
     const [fndMovies,setFndMovies] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     function submit(e) {
+        setIsLoading(true);
         e.preventDefault();
         
         
@@ -174,17 +180,16 @@ function Movies () {
                     if (movieName.includes(movie.toLowerCase().replace(/"/g, "").replace(/'/g, "").replace(/\(|_\)/g, "").replace('-', "").replace(')', "").replace(" ", "").replace(" ", "").replace("(", "")) == true && matched.includes([data[i][j],j]) == false){
                     
                         
-                        console.log(j);
+                        
                         var url2 = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' +  data[i][j]+ '&name=' + j;
                         const response2 = await fetch(
                             url2
                         );
                         const data2 = await response2.json();
                         // return [Object.values(data)];
-                        console.log(data2["budget"]);
-                        console.log(data2["box-office"]);
-                        matched.push([j,data[i][j],data2["budget"],data2["box-office"]]);
-                        console.log(matched);
+                        if(matched.includes([j,data[i][j],data2["budget"],data2["box-office"]]) == false || matched.includes([j,data[i][j],data2["budget"],data2["box-office"]]) == undefined) {
+                         matched.push([j,data[i][j],data2["budget"],data2["box-office"]]);
+                    }
                         
                       }
 
@@ -195,7 +200,7 @@ function Movies () {
               matched = new Set(matched)
 
             matched = Array.from(matched)
-            console.log(matched);
+              setIsLoading(false);
             
               return matched
             }
@@ -204,7 +209,7 @@ function Movies () {
                 
                 
              })()
-        console.log(fndMovies);
+        
 
 
 
@@ -223,6 +228,7 @@ function Movies () {
 
     return (
         <>
+        <div className='container'>
         <h1
         className='mt-4'
         style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
@@ -246,13 +252,17 @@ function Movies () {
                     autoFocus
                     />
                 </form>
+                
             </Col>
+            <Spinner animation="border" variant="primary" style={{visibility: (isLoading == true) ? 'visible' : 'hidden'}}/>
         </Row>
-        <Render matched={fndMovies}></Render>
+        
+        <Render matched={fndMovies} isLoading={isLoading}></Render>
         {/* {matched}
         {matched.map((word,key)=> (
             <button>{word[1]}</button>
         ))} */}
+        </div>
         </>
         )
 }
