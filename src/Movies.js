@@ -236,7 +236,7 @@ function Movies () {
         Box Office and Budget Finder:
       </h1>
       <h2 className='mt-1'>
-          This tool is to show you the weather you type in the input below:
+          This tool is to show you the movie's budget and box office you type in the input below:
         </h2>
 
         <Row className='justify-content-md-center mb-2'>
