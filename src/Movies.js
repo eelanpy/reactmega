@@ -45,7 +45,7 @@ import Spinner from 'react-bootstrap/Spinner'
 //     //         for(let i = 0; i < list.length; i++) {
         
 //     //             list2.push(await getMovieData(list[i][0], list[i][1]));
-//     //              console.log(list2);   
+
                 
             
 //     //         }
@@ -66,7 +66,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 function Render(props) {
     
-    // console.log(props);
+    
     // var matched1 =[];
     // const [matched,setMatched] = useState([])
     // // useEffect(() => {
@@ -74,10 +74,10 @@ function Render(props) {
     // //         setMatched(removeMatchedDuplicates(props.matched))
     // //     }  
     // //     hello()
-    // //     console.log(matched);
+    
     // // })
-    // console.log(removeMatchedDuplicates(props.matched)[0]);
-    console.log(props.isLoading);
+    
+    
     
 
         
@@ -123,7 +123,7 @@ function Render(props) {
         </>
     )
      
-    //  console.log(matched1);
+    
     
     
     // 
@@ -142,7 +142,7 @@ function Movies () {
         // inputWords = movieName.toLowerCase().replace(/"/g, "").replace(/'/g, "").replace(/\(|_\)/g, "").replace('-', "").replace(')', "").replace(" ", "").replace(" ", "").replace("(", "");
 
 
-        // console.log(movie);
+        
 
     }
     const [fndMovies,setFndMovies] = useState([])
@@ -155,7 +155,7 @@ function Movies () {
         const url = 'https://eelanpy1.s3.us-east-2.amazonaws.com/movies.json'
         
         
-        // console.log(inputWords);
+        
         async function fetchData() {
             var matched = []
             const response = await fetch(
@@ -163,7 +163,7 @@ function Movies () {
             );
             const data = await response.json();
             
-            // console.log(matched);
+            
             for (let i of Object.keys(data)) {
 
                 for (let j in data[i]) {
@@ -172,11 +172,7 @@ function Movies () {
                     movieName = movieName.replace(" ", "").replace(" ", "")
                     
           
-        
-                    // console.log("Input: ")
-                    
-                    // console.log("Movie: ")
-                    // console.log(movieName);
+
                     if (movieName.includes(movie.toLowerCase().replace(/"/g, "").replace(/'/g, "").replace(/\(|_\)/g, "").replace('-', "").replace(')', "").replace(" ", "").replace(" ", "").replace("(", "")) == true && matched.includes([data[i][j],j]) == false){
                     
                         
@@ -215,8 +211,8 @@ function Movies () {
 
         
 
-        // console.log(matched);
-        // setMatched(Array.from(matched))
+        
+        
         
         
         
