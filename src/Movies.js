@@ -107,7 +107,7 @@ function Render(props) {
                         <div className={(word[0] == "Not Found!") ? "card text-bg-danger mb-2" : "card border-primary mb-2 text-center" }>
 
                         <div className="card-body text-center" style={{textAlign: (word[0] == "Not Found!") ? 'center' : ''}}>
-                            <strong className="card-title" style={{fontSize: "2rem"}}>{word[0] == "Not Found!" ? "Not Found!" : word[0] + ':' }</strong>
+                            <strong className="card-title" style={{fontSize: "2rem"}}>{word[0] == "Not Found!" ? "Movie Not Found!" : word[0] + ':' }</strong>
                             
                             {word[0] == "Not Found!" ? '' : <><p className="card-text" style={{padding: 0, margin: 0,fontSize: (word[0] == "Not Found!") ? 0 : "1.5rem", visibility: (word[0] == "Not Found!") ? 'hidden' : 'visible'}}>Budget: {word[2]}</p>
                             <p className="card-text" style={{padding: 0, margin: 0,fontSize: (word[0] == "Not Found!") ? 0 : "1.5rem", visibility: (word[0] == "Not Found!") ? 'hidden' : 'visible'}}>Box-Office: {word[3]}</p>
