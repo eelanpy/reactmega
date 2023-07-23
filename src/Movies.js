@@ -1,9 +1,10 @@
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Image from 'react-bootstrap/Image';
-import { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card'
+// import Image from 'react-bootstrap/Image';
+// import { useEffect, useState } from 'react';
+import {useState} from 'react'
+// import Card from 'react-bootstrap/Card'
 import React from 'react';
 import Spinner from 'react-bootstrap/Spinner'
 
@@ -152,59 +153,45 @@ function Movies () {
         e.preventDefault();
         
         
-        const url = 'https://eelanpy1.s3.us-east-2.amazonaws.com/movies.json'
         
         
         
         async function fetchData() {
             var matched = []
-            const response = await fetch(
-                url
-            );
-            const data = await response.json();
-            
-            
-            for (let i of Object.keys(data)) {
 
-                for (let j in data[i]) {
-                    var movieName = j.toLowerCase().replace(/"/g, "").replace(/'/g, "").replace(/\(|_\)/g, "").replace('-', "").replace(')', "").replace("(", "");
-
-                    movieName = movieName.replace(" ", "").replace(" ", "")
-                    
-          
-
-                    if (movieName.includes(movie.toLowerCase().replace(/"/g, "").replace(/'/g, "").replace(/\(|_\)/g, "").replace('-', "").replace(')', "").replace(" ", "").replace(" ", "").replace("(", "")) == true && matched.includes([data[i][j],j]) == false){
-                    
                         
                         
-                        var url2 = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=' +  data[i][j]+ '&name=' + j;
-                        const response2 = await fetch(
+            var url2 = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=test'+ '&name=' + movie;
+            const response2 = await fetch(
                             url2
-                        );
-                        const data2 = await response2.json();
+            );
+            const data2 = await response2.json();
                         // return [Object.values(data)];
-                        if(matched.includes([j,data[i][j],data2["budget"],data2["box-office"]]) == false || matched.includes([j,data[i][j],data2["budget"],data2["box-office"]]) == undefined) {
-                         matched.push([j,data[i][j],data2["budget"],data2["box-office"]]);
-                    }
-                        
-                      }
-
-
-                }
-                
-              }
-              matched = new Set(matched)
+            for(let i = 0; i<data2.length; i++) {
+                matched.push([data2[i]["movie_name"],data2[i]["wiki_link"], data2[i]["budget"], data2[i]["box-office"]])
+            }       
+             matched = new Set(matched)
 
             matched = Array.from(matched)
               setIsLoading(false);
             
-              return matched
-            }
-        (async () => {
+              return matched     
+        }
+                            (async () => {
                 setFndMovies(await fetchData())
                 
                 
              })()
+                        
+                      }
+
+
+                
+                
+              
+             
+            
+
         
 
 
@@ -216,7 +203,7 @@ function Movies () {
         
         
         
-    }
+    
 
 
     
