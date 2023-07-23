@@ -168,7 +168,8 @@ function Movies () {
             const data2 = await response2.json();
                         // return [Object.values(data)];
             if(data2 == []) {
-                return [["Not Found!", "","",""]]
+                matched = [["Not Found!", "","",""]]
+                return matched
 }
             for(let i = 0; i<data2.length; i++) {
                 matched.push([data2[i]["movie_name"],data2[i]["wiki_link"], data2[i]["budget"], data2[i]["box-office"]])
