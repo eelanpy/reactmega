@@ -160,7 +160,11 @@ function Movies () {
         async function fetchData() {
             var matched = []
 
-                        
+            if(movie == '' || movie == ' ')  {
+                                matched = [["Not Found!", "","",""]]
+                setIsLoading(false);
+                return matched
+            }
                         
             var url2 = 'https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=test'+ '&name=' + movie;
             const response2 = await fetch(
@@ -169,7 +173,7 @@ function Movies () {
             const data2 = await response2.json();
                         // return [Object.values(data)];
             console.log(data2 == [])
-            if(data2.length < 1) {
+            if(data2.length < 1  ) {
                 matched = [["Not Found!", "","",""]]
                 setIsLoading(false);
                 return matched
