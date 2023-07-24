@@ -220,7 +220,7 @@ function Movies () {
 
     return (
         <>
-        <div className=' container justify-md-content-center'>
+        <div className='container justify-md-content-center'>
         <h1
         className='mt-4'
         style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
@@ -228,28 +228,38 @@ function Movies () {
         Box Office and Budget Finder:
       </h1>
       <h2 className='mt-1'>
-          This tool is to show you the movie's budget and box office you type in the input below:
+          This tool is to show you the movie's budget and box office you type in the input below after pressing Return/Enter:
         </h2>
 
-        <Row className='justify-content-md-center mb-2'>
-            <Col xs lg='3'>
-                <form onSubmit={submit}>
-                    <Form.Control
+                <Row className='justify-content-md-center mb-2'>
+            <Col xs lg='6'>
+                <form onSubmit={submit} className='input-group'>
+                    <input
                     type='text'
-                    className={`mb-4`}      
+                    className='form-control'   
                     placeholder='Please type a movie:'
                     
                     value={movie}
                     onChange={(e) => change(e)}
                     autoFocus
                     />
+                    {/* <div className="input-group-append"> */}
+    <button className="btn btn-outline-secondary" style={{borderTopRadius: '.25rem'}}type="submit">Submit</button>
+  {/* </div> */}
                 </form>
-                
+                  
+                        
             </Col>
+            
+            <br/>
+            
             <Spinner animation="border" variant="primary" style={{visibility: (isLoading == true) ? 'visible' : 'hidden'}}/>
+            
         </Row>
-        
+
         <Render matched={fndMovies} isLoading={isLoading}></Render>
+        
+        
         {/* {matched}
         {matched.map((word,key)=> (
             <button>{word[1]}</button>
