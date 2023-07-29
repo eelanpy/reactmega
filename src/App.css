@@ -106,13 +106,18 @@ thead button {
 }
 
 thead button.ascending::after {
-  content: '👇';
+  content: '↑';
   display: inline-block;
+  font-size: 1.5rem;
   /* margin-left: 1em; */
 }
 
 thead button.descending::after {
-  content: '☝️';
+  content: '↑';
+  transform: rotate(180deg);
+  /* transition-delay: 2s; */
+
+  font-size: 1.5rem;
   display: inline-block;
   /* margin-left: 1em; */
 }

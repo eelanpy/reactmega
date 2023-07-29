@@ -11,7 +11,9 @@ import React from 'react';
 import './App.css';
 
 
-
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
@@ -114,17 +116,17 @@ Expiry            </button>
             <td>{item.ask}</td>
             <td>{item.units}</td>
             <td>{Math.round(item.invested)}</td>
-            <td className="text-danger">{Math.round(item["profit_0"])}</td>
-            <td className={item["profit_0.01"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.01"])}</td>
-            <td className={item["profit_0.02"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.02"])}</td>
-            <td className={item["profit_0.03"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.03"])}</td>
-            <td className={item["profit_0.04"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.04"])}</td>
-            <td className={item["profit_0.05"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.05"])}</td>
-            <td className={item["profit_0.06"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.06"])}</td>
-            <td className={item["profit_0.1"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.1"])}</td>
-            <td className={item["profit_0.15"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.15"])}</td>
-            <td className={item["profit_0.2"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.2"])}</td>
-            <td className={item["profit_0.25"] < 0 ? 'text-danger' : 'text-success'}>{Math.round(item["profit_0.25"])}</td>
+            <td className={item["profit_0.01"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0"]))}</td>
+            <td className={item["profit_0.01"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.01"]))}</td>
+            <td className={item["profit_0.02"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.02"]))}</td>
+            <td className={item["profit_0.03"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.03"]))}</td>
+            <td className={item["profit_0.04"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.04"]))}</td>
+            <td className={item["profit_0.05"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.05"]))}</td>
+            <td className={item["profit_0.06"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.06"]))}</td>
+            <td className={item["profit_0.1"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.1"]))}</td>
+            <td className={item["profit_0.15"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.15"]))}</td>
+            <td className={item["profit_0.2"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.2"]))}</td>
+            <td className={item["profit_0.25"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.25"]))}</td>
           </tr>
         ))}
       </tbody>
