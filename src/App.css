@@ -109,6 +109,7 @@ thead button.ascending::after {
   content: '↑';
   display: inline-block;
   font-size: 1.5rem;
+  transition: 300ms linear all;
   /* margin-left: 1em; */
 }
 
@@ -116,7 +117,7 @@ thead button.descending::after {
   content: '↑';
   transform: rotate(180deg);
   /* transition-delay: 2s; */
-
+  transition: 300ms linear all;
   font-size: 1.5rem;
   display: inline-block;
   /* margin-left: 1em; */
