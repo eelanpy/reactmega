@@ -9,7 +9,8 @@ thead th {
 }
 
 thead button {
-    border: 0;
+    /* border: black; */
+    border: none;
     border-radius: none;
     font-family: inherit;
     font-weight: 700;
@@ -39,7 +40,7 @@ thead button.descending::after {
 
 tbody td {
     padding: 0.5em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid black;
 }
 
 tbody tr:hover {
@@ -48,4 +49,37 @@ tbody tr:hover {
 
 tbody tr {
     text-align: center;
+}
+
+table td {
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+table td:first-child {
+    border-left: none;
+}
+
+table td:last-child {
+    border-right: none;
+}
+
+/* button.descending.profit {
+    color: blue;
+} */
+
+/* table th {
+    border: black;
+} */
+
+/* tbody tr td {
+    padding: 0.5px;
+} */
+tbody {
+    font-weight: 700;
+    color: black;
+}
+
+.text-white {
+    color: black;
 }

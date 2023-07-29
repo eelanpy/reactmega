@@ -10,6 +10,8 @@ import React from 'react';
 
 import './App.css';
 import './Options.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 
 function numberWithCommas(x) {
@@ -117,17 +119,17 @@ Expiry            </button>
             <td>{item.ask}</td>
             <td>{item.units}</td>
             <td>{Math.round(item.invested)}</td>
-            <td className={item["profit_0.01"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0"]))}</td>
-            <td className={item["profit_0.01"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.01"]))}</td>
-            <td className={item["profit_0.02"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.02"]))}</td>
-            <td className={item["profit_0.03"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.03"]))}</td>
-            <td className={item["profit_0.04"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.04"]))}</td>
-            <td className={item["profit_0.05"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.05"]))}</td>
-            <td className={item["profit_0.06"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.06"]))}</td>
-            <td className={item["profit_0.1"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.1"]))}</td>
-            <td className={item["profit_0.15"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.15"]))}</td>
-            <td className={item["profit_0.2"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.2"]))}</td>
-            <td className={item["profit_0.25"] < 0 ? 'text-danger' : 'text-success'}>{numberWithCommas(Math.round(item["profit_0.25"]))}</td>
+            <td className={item["profit_0.01"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0"]))}</td>
+            <td className={item["profit_0.01"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.01"]))}</td>
+            <td className={item["profit_0.02"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.02"]))}</td>
+            <td className={item["profit_0.03"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.03"]))}</td>
+            <td className={item["profit_0.04"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.04"]))}</td>
+            <td className={item["profit_0.05"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.05"]))}</td>
+            <td className={item["profit_0.06"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.06"]))}</td>
+            <td className={item["profit_0.1"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.1"]))}</td>
+            <td className={item["profit_0.15"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.15"]))}</td>
+            <td className={item["profit_0.2"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.2"]))}</td>
+            <td className={item["profit_0.25"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.25"]))}</td>
           </tr>
         ))}
       </tbody>
@@ -158,10 +160,10 @@ function App(props) {
 //           { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
 
 function Options() {
-    // const [stock,setStock] = useState('')
-    // const [optionType, setOptionType] = useState('Put')
-    // const [monthsToExpire, setMonthsToExpire] = useState(1)
-    // const [investAmt, setInvestAmt] = useState(1000)
+    const [stock,setStock] = useState('aapl')
+    const [optionType, setOptionType] = useState('put')
+    const [monthsToExpire, setMonthsToExpire] = useState(2)
+    const [investAmt, setInvestAmt] = useState(1000)
     
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false) 
@@ -174,10 +176,10 @@ function Options() {
     // setOptionType('call');
     // setMonthsToExpire(2);
     // setInvestAmt(1000);
-        var stock = 'aapl';
-        var optionType = 'call';
-        var monthsToExpire = 2;
-        var investAmt = 1000;
+        // var stock = 'aapl';
+        // var optionType = 'call';
+        // var monthsToExpire = 2;
+        // var investAmt = 1000;
         e.preventDefault()
         async function fetchData() {
 
