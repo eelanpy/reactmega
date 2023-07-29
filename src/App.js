@@ -5,6 +5,7 @@ import Hangman from './Hangman'
 import Number from './Number'
 import Weather from './Weather'
 import Movies from './Movies'
+import Options from './Options'
 
 import './App.css'
 
@@ -19,7 +20,8 @@ const links = [
   ['Hangman Cheatsheet', <Hangman />],
   ['Number Guessing Game', <Number />],
   ['Weather Finder By City', <Weather />],
-  ['Box Office and Budget Finder', <Movies />]
+  ['Box Office and Budget Finder', <Movies />],
+  ['Stock Options Quotes by Second', <Options />]
 ]
 
 const App = () => (
