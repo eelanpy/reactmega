@@ -76,10 +76,20 @@ table td:last-child {
     padding: 0.5px;
 } */
 tbody {
-    font-weight: 700;
+    /* font-weight: 700; */
     color: black;
 }
 
 .text-white {
     color: black;
+}
+
+select, option:checked {
+    color: 'blue'
+}
+
+/* #dropdown-basic:hover {background-color: white;}  */
+
+.text-white {
+    background-color: #20c997;
 }

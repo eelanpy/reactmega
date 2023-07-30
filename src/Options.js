@@ -1,86 +1,123 @@
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Image from 'react-bootstrap/Image';
+import Image from 'react-bootstrap/Image'
 import Spinner from 'react-bootstrap/Spinner'
+import Dropdown from 'react-bootstrap/Dropdown'
 
-import { useEffect, useState } from 'react';
+// function BasicExample() {
+//   return (
+//     <Dropdown>
+//       <Dropdown.Toggle variant="success" id="dropdown-basic">
+//         Dropdown Button
+//       </Dropdown.Toggle>
 
-import React from 'react';
+//       <Dropdown.Menu>
+//         <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+//         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+//         <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+//       </Dropdown.Menu>
+//     </Dropdown>
+//   );
+// }
 
-import './App.css';
-import './Options.css'
+// export default BasicExample;
+
+import { useEffect, useState } from 'react'
+
+import React from 'react'
+
+import './App.css'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './Options.css'
+var stocks = ['AAPL', 'MSFT', 'META', 'AMZN']
 
+function BasicExample (props) {
+  const list = props.list === undefined ? stocks : props.list
+  //   console.log(props.list[0])
+  return (
+    <Dropdown className='mt-5' style={{ display: 'inline' }}>
+      <Dropdown.Toggle variant='success' id='dropdown-basic'>
+        {props.text}:{' '}
+      </Dropdown.Toggle>
 
+      <Dropdown.Menu>
+        {Array.from(list).map(stockName => (
+          <Dropdown.Item href='#/action-2'>{stockName}</Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+}
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+function numberWithCommas (x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 }
 
 const useSortableData = (items, config = null) => {
-  const [sortConfig, setSortConfig] = React.useState(config);
+  const [sortConfig, setSortConfig] = React.useState(config)
 
   const sortedItems = React.useMemo(() => {
-    let sortableItems = [...items];
+    let sortableItems = [...items]
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+          return sortConfig.direction === 'ascending' ? -1 : 1
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+          return sortConfig.direction === 'ascending' ? 1 : -1
         }
-        return 0;
-      });
+        return 0
+      })
     }
-    return sortableItems;
-  }, [items, sortConfig]);
+    return sortableItems
+  }, [items, sortConfig])
 
-  const requestSort = (key) => {
-    let direction = 'ascending';
+  const requestSort = key => {
+    let direction = 'ascending'
     if (
       sortConfig &&
       sortConfig.key === key &&
       sortConfig.direction === 'ascending'
     ) {
-      direction = 'descending';
+      direction = 'descending'
     }
-    setSortConfig({ key, direction });
-  };
+    setSortConfig({ key, direction })
+  }
 
-  return { items: sortedItems, requestSort, sortConfig };
-};
+  return { items: sortedItems, requestSort, sortConfig }
+}
 
-const ProductTable = (props) => {
-    console.log(props.products);
-  const { items, requestSort, sortConfig } = useSortableData(props.products);
-  const getClassNamesFor = (name) => {
+const ProductTable = props => {
+  console.log(props.products)
+  const { items, requestSort, sortConfig } = useSortableData(props.products)
+  const getClassNamesFor = name => {
     if (!sortConfig) {
-      return;
+      return
     }
-    return sortConfig.key === name ? sortConfig.direction : undefined;
-  };
+    return sortConfig.key === name ? sortConfig.direction : undefined
+  }
   try {
-  return (
-    <table>
-      {/* <caption>Products</caption> */}
-      <thead>
-        <tr>
-            {
-                Object.keys(items[0]).map((key) => (
-                    <th>
-            <button
-              type="button"
-              onClick={() => requestSort(key)}
-              className={getClassNamesFor(key)}
-            >
-              {key.toUpperCase()}
-            </button>
-          </th>
-                ))
-            }
-          {/* <th>
+    return (
+      <table className='mt-2'>
+        {/* <caption>Products</caption> */}
+        <thead>
+          <tr>
+            {Object.keys(items[0]).map(key => (
+              <th>
+                <button
+                  type='button'
+                  onClick={() => requestSort(key)}
+                  className={getClassNamesFor(key)}
+                >
+                  {key.toUpperCase().includes('PROFIT_') == true
+                    ? 'With_' + parseFloat(key.split('_')[1]) * 100 + '%'
+                    : key.toUpperCase()}
+                </button>
+              </th>
+            ))}
+            {/* <th>
             <button
               type="button"
               onClick={() => requestSort('stock')}
@@ -106,49 +143,135 @@ const ProductTable = (props) => {
             >
 Expiry            </button>
           </th> */}
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((item,idx) => (
-          <tr>
-            <td>{item.stock.toUpperCase()}</td>
-            <td>{item.type.toUpperCase()}</td>
-            <td>{item.stock_price}</td>
-            <td>{item.expiry}</td>
-            <td>{item.strike}</td>
-            <td>{item.ask}</td>
-            <td>{item.units}</td>
-            <td>{Math.round(item.invested)}</td>
-            <td className={item["profit_0.01"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0"]))}</td>
-            <td className={item["profit_0.01"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.01"]))}</td>
-            <td className={item["profit_0.02"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.02"]))}</td>
-            <td className={item["profit_0.03"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.03"]))}</td>
-            <td className={item["profit_0.04"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.04"]))}</td>
-            <td className={item["profit_0.05"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.05"]))}</td>
-            <td className={item["profit_0.06"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.06"]))}</td>
-            <td className={item["profit_0.1"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.1"]))}</td>
-            <td className={item["profit_0.15"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.15"]))}</td>
-            <td className={item["profit_0.2"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.2"]))}</td>
-            <td className={item["profit_0.25"] < 0 ? 'bg-danger text-white' : 'bg-success text-white'}>{numberWithCommas(Math.round(item["profit_0.25"]))}</td>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  )
-        } catch {
-            console.log("couldn'tfind");
-        };
-};
+        </thead>
+        <tbody>
+          {items.map((item, idx) => (
+            <tr>
+              <td>{item.stock.toUpperCase()}</td>
+              <td>{item.type.toUpperCase()}</td>
+              <td>{item.stock_price}</td>
+              <td>{item.expiry}</td>
+              <td>{item.strike}</td>
+              <td>{item.ask}</td>
+              <td>{item.units}</td>
+              <td>{Math.round(item.invested)}</td>
+              <td
+                className={
+                  item['profit_0'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.01'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.01']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.02'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.02']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.03'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.03']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.04'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.04']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.05'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.05']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.06'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.06']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.1'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.1']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.15'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.15']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.2'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.2']))}
+              </td>
+              <td
+                className={
+                  item['profit_0.25'] < 0
+                    ? 'bg-danger-subtle text-black'
+                    : 'bg-success-subtle text-black'
+                }
+              >
+                {numberWithCommas(Math.round(item['profit_0.25']))}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  } catch {
+    console.log("couldn'tfind")
+  }
+}
 
-function App(props) {
-  console.log(props);  
+function App (props) {
+  console.log(props)
   return (
-    <div className="App">
-      <ProductTable
-        products={props.data}
-      />
+    <div className='App'>
+      <ProductTable products={props.data} />
     </div>
-  );
+  )
 }
 
 // { id: 1, name: 'Cheese', price: 4.9, stock: 20 },
@@ -159,70 +282,202 @@ function App(props) {
 //           { id: 6, name: 'Sour Cream ', price: 2.9, stock: 86 },
 //           { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
 
-function Options() {
-    const [stock,setStock] = useState('aapl')
-    const [optionType, setOptionType] = useState('put')
-    const [monthsToExpire, setMonthsToExpire] = useState(2)
-    const [investAmt, setInvestAmt] = useState(1000)
-    
-    const [data, setData] = useState([])
-    const [isLoading, setIsLoading] = useState(false) 
-    
+function Options () {
+  const [stock, setStock] = useState('Stock')
+  const [optionType, setOptionType] = useState('Type')
+  const [monthsToExpire, setMonthsToExpire] = useState('Months of Expiry')
+  const [investAmt, setInvestAmt] = useState('To Invest:')
 
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
-    function submit(e) {
-        setIsLoading(true)
+  function submit (e) {
+    setIsLoading(true)
     //     setStock('aapl');
     // setOptionType('call');
     // setMonthsToExpire(2);
     // setInvestAmt(1000);
-        // var stock = 'aapl';
-        // var optionType = 'call';
-        // var monthsToExpire = 2;
-        // var investAmt = 1000;
-        e.preventDefault()
-        async function fetchData() {
-
-        
-        var url = `https://pfs2dz5045.execute-api.us-east-2.amazonaws.com/ktest/koptions?stock=${stock}&option_type=${optionType}&months_to_expire=${monthsToExpire}&to_invest=${investAmt}`;
-        console.log(url);
-        const response2 = await fetch(
-            url
-        );
-        const data2 = await response2.json();
-        return data2;
+    // var stock = 'aapl';
+    // var optionType = 'call';
+    // var monthsToExpire = 2;
+    // var investAmt = 1000;
+    e.preventDefault()
+    async function fetchData () {
+      var url = `https://pfs2dz5045.execute-api.us-east-2.amazonaws.com/ktest/koptions?stock=${stock.toLowerCase()}&option_type=${optionType
+        .split(' Option')[0]
+        .toLowerCase()}&months_to_expire=${parseInt(
+        monthsToExpire.split(' Month')[0]
+      )}&to_invest=${parseInt(investAmt.split('$')[1])}`
+      console.log(url)
+      const response2 = await fetch(url)
+      const data2 = await response2.json()
+      return data2
     }
-    (async () => {
-        console.log(await fetchData());
-        setData(await fetchData())
-        // console.log(data)
-        setIsLoading(false)
-     })()
-     
-     
-    }
-    
-    // submit();
+    ;(async () => {
+      console.log(await fetchData())
+      setData(await fetchData())
+      // console.log(data)
+      console.log(data)
+      setIsLoading(false)
+    })()
+  }
 
-    document.title = "Stock Options Quotes by Second"
+  // submit();
 
-    return (
-        <>
-               <h1
-        className='mt-4'
-        style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
-        onTouchMoveCapture={submit}
-      >
-        Stock Options Quotes by Second
-      </h1>
-      <form onSubmit={submit}>
-        <button type="submit">Submit!</button>
-        <Spinner animation="border" variant="primary" style={{visibility: (isLoading == true) ? 'visible' : 'hidden'}}/>
-      </form>
-      
-      <App data={data}/>
-      </>
-    )
+  document.title = 'Stock Options Quotes by Second'
+
+  return (
+    <>
+      <div className='container justify-md-content-center'>
+        <h1
+          className='mt-4'
+          style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
+          onTouchMoveCapture={submit}
+        >
+          Stock Options Quotes by Second
+        </h1>
+        {/* <!-- Example split danger button --> */}
+        {/* <BasicExample /> */}
+        <div className='d-flex justify-content-center'>
+          {/* <Col xs lg='8'> */}
+          <form onSubmit={submit}>
+            <Dropdown className='m-2' style={{ display: 'inline' }}>
+              <Dropdown.Toggle
+                variant={stock === 'Stock' ? 'outline-info' : 'info'}
+                id='dropdown-basic'
+              >
+                {stock}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {['AAPL', 'MSFT', 'AMZN', 'META'].map(stockName => (
+                  <Dropdown.Item
+                    href=''
+                    onClick={e => {
+                      setStock(e.target.innerText)
+                    }}
+                  >
+                    {stockName}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown className='m-2' style={{ display: 'inline' }}>
+              <Dropdown.Toggle
+                variant={
+                  optionType === 'Type' ? 'outline-secondary' : 'secondary'
+                }
+                id='dropdown-basic'
+              >
+                {optionType}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {['Call Option', 'Put Option', 'Any Option'].map(stockName => (
+                  <>
+                    <Dropdown.Item
+                      href=''
+                      className=''
+                      onClick={e => {
+                        setOptionType(e.target.innerText)
+                      }}
+                    >
+                      {stockName}
+                    </Dropdown.Item>
+                    {/* <span>"Option Type"</span> */}
+                  </>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown className='m-2' style={{ display: 'inline' }}>
+              <Dropdown.Toggle
+                variant={
+                  monthsToExpire === 'Months of Expiry'
+                    ? 'outline-success'
+                    : 'success'
+                }
+                id='dropdown-basic'
+              >
+                {monthsToExpire}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className='m-2'>
+                {[
+                  '1 Month to Expire',
+                  '2 Months to Expire',
+                  '3 Months to Expire',
+                  '4 Months to Expire',
+                  '5 Months to Expire',
+                  '6 Months to Expire',
+                  '12 Months to Expire'
+                ].map(stockName => (
+                  <Dropdown.Item
+                    href=''
+                    onClick={e => {
+                      setMonthsToExpire(e.target.innerText)
+                    }}
+                  >
+                    {stockName}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown className='m-2' style={{ display: 'inline' }}>
+              <Dropdown.Toggle
+                variant={
+                  investAmt === 'To Invest:' ? 'outline-warning' : 'warning'
+                }
+                id='dropdown-basic'
+              >
+                {investAmt}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className='m-2'>
+                {[
+                  'Invest $500',
+                  'Invest $1000',
+                  'Invest $2000',
+                  'Invest $5000',
+                  'Invest $10000'
+                ].map(stockName => (
+                  <Dropdown.Item
+                    href=''
+                    onClick={e => {
+                      setInvestAmt(e.target.innerText)
+                    }}
+                  >
+                    {stockName}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <button
+              type='submit'
+              className='btn btn-primary m-0'
+              disabled={
+                stock == 'Stock' ||
+                optionType == 'Type' ||
+                monthsToExpire == 'Months of Expiry' ||
+                investAmt == 'To Invest:'
+                  ? true
+                  : false
+              }
+            >
+              Submit!{' '}
+            </button>{' '}
+            <Spinner
+              animation='border'
+              variant='primary'
+              className='mt-3'
+              style={{ visibility: isLoading == true ? 'visible' : 'hidden' }}
+            />
+          </form>
+          {/* </Col> */}
+        </div>
+      </div>
+      <App data={data} />
+    </>
+  )
 }
 
-export default Options;
+export default Options
