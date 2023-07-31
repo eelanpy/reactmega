@@ -28,9 +28,9 @@ import { useEffect, useState } from 'react'
 import React from 'react'
 
 import './App.css'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
+
 var stocks = ['AAPL', 'MSFT', 'META', 'AMZN']
 
 function BasicExample (props) {
@@ -261,16 +261,49 @@ Expiry            </button>
       </table>
     )
   } catch {
-    console.log("couldn'tfind")
+    return (
+      <>
+        <div
+          className='card text-bg-danger m-2'
+          style={{
+            visibility: props.isSelected == true ? 'visible' : 'hidden'
+          }}
+        >
+          <div
+            className='card-body text-center'
+            style={{ textAlign: 'center' }}
+          >
+            <p
+              className='card-title font-italic'
+              style={{ fontSize: '2rem', fontWeight: 900 }}
+            >
+              Stock Not Found!!!
+            </p>
+            <p
+              className='font-weight-normal'
+              style={{ fontSize: '1.75rem', fontWeight: 500 }}
+            >
+              Somehow the fields you submitted can't be found in our data.
+            </p>
+            <p style={{ fontSize: '1.5rem' }} className='font-weight-light'>
+              Try another stock
+            </p>
+          </div>
+        </div>
+      </>
+    )
   }
 }
 
 function App (props) {
   console.log(props)
+
   return (
-    <div className='App'>
-      <ProductTable products={props.data} />
-    </div>
+    <>
+      <div className='App'>
+        <ProductTable products={props.data} isSelected={props.isSelected} />
+      </div>
+    </>
   )
 }
 
@@ -290,7 +323,7 @@ function Options () {
 
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
+  const [isSelected, setIsSelected] = useState(false)
   function submit (e) {
     setIsLoading(true)
     //     setStock('aapl');
@@ -302,6 +335,7 @@ function Options () {
     // var monthsToExpire = 2;
     // var investAmt = 1000;
     e.preventDefault()
+
     async function fetchData () {
       var url = `https://pfs2dz5045.execute-api.us-east-2.amazonaws.com/ktest/koptions?stock=${stock.toLowerCase()}&option_type=${optionType
         .split(' Option')[0]
@@ -311,6 +345,7 @@ function Options () {
       console.log(url)
       const response2 = await fetch(url)
       const data2 = await response2.json()
+      //   setIsLoading(false)
       return data2
     }
     ;(async () => {
@@ -319,6 +354,7 @@ function Options () {
       // console.log(data)
       console.log(data)
       setIsLoading(false)
+      setIsSelected(true)
     })()
   }
 
@@ -422,7 +458,7 @@ function Options () {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-            <Dropdown className='m-2' style={{ display: 'inline' }}>
+            <Dropdown className='p-3' style={{ display: 'inline' }}>
               <Dropdown.Toggle
                 variant={
                   investAmt === 'To Invest:' ? 'outline-warning' : 'warning'
@@ -453,7 +489,7 @@ function Options () {
             </Dropdown>
             <button
               type='submit'
-              className='btn btn-primary m-0'
+              className='btn btn-primary'
               disabled={
                 stock == 'Stock' ||
                 optionType == 'Type' ||
@@ -475,7 +511,7 @@ function Options () {
           {/* </Col> */}
         </div>
       </div>
-      <App data={data} />
+      <App data={data} isSelected={isSelected} />
     </>
   )
 }

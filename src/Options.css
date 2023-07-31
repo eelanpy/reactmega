@@ -4,8 +4,16 @@ table {
 }
 
 thead th {
+    
     text-align: center;
     border-bottom: 2px solid black;
+    position: sticky;
+    padding-bottom: 0.5rem;
+}
+
+th {
+    position: sticky;
+    top: 0; /* Don't forget this, required for the stickiness */
 }
 
 thead button {
@@ -40,7 +48,7 @@ thead button.descending::after {
 
 tbody td {
     padding: 0.5em;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid black;
 }
 
 tbody tr:hover {
@@ -52,8 +60,8 @@ tbody tr {
 }
 
 table td {
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
 
 table td:first-child {
@@ -93,3 +101,11 @@ select, option:checked {
 .text-white {
     background-color: #20c997;
 }
+
+/* .row {
+    display: inline;
+}
+
+.col {
+    display: inline;
+} */

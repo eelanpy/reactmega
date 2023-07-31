@@ -17,16 +17,22 @@ import { NavLink } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const links = [
-  ['Hangman Cheatsheet', <Hangman />],
-  ['Number Guessing Game', <Number />],
-  ['Weather Finder By City', <Weather />],
-  ['Box Office and Budget Finder', <Movies />],
-  ['Stock Options Quotes by Second', <Options />]
+  ['Hangman', <Hangman />],
+  ['Number Guessing', <Number />],
+  ['Weather App', <Weather />],
+  ['Box Office/Budget Finder', <Movies />],
+  ['Stock Options', <Options />]
 ]
 
 const App = () => (
   <>
-    <Navbar collapseOnSelect expand='lg' bg='primary' data-bs-theme='dark' sticky='top'>
+    <Navbar
+      collapseOnSelect
+      expand='lg'
+      bg='primary'
+      data-bs-theme='dark'
+      // sticky='top'
+    >
       <Container>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
