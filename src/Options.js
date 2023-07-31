@@ -360,7 +360,7 @@ function Options () {
 
   // submit();
 
-  document.title = 'Stock Options Quotes by Second'
+  document.title = 'Stock Options'
 
   return (
     <>
@@ -370,7 +370,7 @@ function Options () {
           style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
           onTouchMoveCapture={submit}
         >
-          Stock Options Quotes by Second
+          Stock Options
         </h1>
         {/* <!-- Example split danger button --> */}
         {/* <BasicExample /> */}
