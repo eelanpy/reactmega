@@ -368,7 +368,6 @@ function Options () {
         <h1
           className='mt-4'
           style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
-          onTouchMoveCapture={submit}
         >
           Stock Options:
         </h1>
