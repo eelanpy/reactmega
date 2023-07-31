@@ -370,7 +370,7 @@ function Options () {
           style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
           onTouchMoveCapture={submit}
         >
-          Stock Options
+          Stock Options:
         </h1>
         {/* <!-- Example split danger button --> */}
         {/* <BasicExample /> */}
