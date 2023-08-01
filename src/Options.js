@@ -31,7 +31,27 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
 
-var stocks = ['AAPL', 'MSFT', 'META', 'AMZN']
+var stocks = [
+  'AAPL',
+  'ADBE',
+  'AMD',
+  'AMZN',
+  'AXP',
+  'CRM',
+  'DLTR',
+  'GOOG',
+  'INTU',
+  'MA',
+  'META',
+  'MSFT',
+  'NFLX',
+  'NKE',
+  'NVDA',
+  'PYPL',
+  'QQQ',
+  'SHOP',
+  'V'
+]
 
 function BasicExample (props) {
   const list = props.list === undefined ? stocks : props.list
@@ -90,6 +110,7 @@ const useSortableData = (items, config = null) => {
 }
 
 const ProductTable = props => {
+  const scrolled = props.scrolled
   console.log(props.products)
   const { items, requestSort, sortConfig } = useSortableData(props.products)
   const getClassNamesFor = name => {
@@ -110,6 +131,7 @@ const ProductTable = props => {
                   type='button'
                   onClick={() => requestSort(key)}
                   className={getClassNamesFor(key)}
+                  style={{ backgroundColor: scrolled == true ? 'white' : '' }}
                 >
                   {key.toUpperCase().includes('PROFIT_') == true
                     ? 'With_' + parseFloat(key.split('_')[1]) * 100 + '%'
@@ -301,7 +323,11 @@ function App (props) {
   return (
     <>
       <div className='App'>
-        <ProductTable products={props.data} isSelected={props.isSelected} />
+        <ProductTable
+          scrolled={props.scrolled}
+          products={props.data}
+          isSelected={props.isSelected}
+        />
       </div>
     </>
   )
@@ -320,7 +346,7 @@ function Options () {
   const [optionType, setOptionType] = useState('Type')
   const [monthsToExpire, setMonthsToExpire] = useState('Months of Expiry')
   const [investAmt, setInvestAmt] = useState('To Invest:')
-
+  const [scrolled, setScrolled] = useState(false)
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSelected, setIsSelected] = useState(false)
@@ -361,7 +387,9 @@ function Options () {
   // submit();
 
   document.title = 'Stock Options'
-
+  window.scroll(function () {
+    setScrolled(true)
+  })
   return (
     <>
       <div className='container justify-md-content-center'>
@@ -385,7 +413,7 @@ function Options () {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {['AAPL', 'MSFT', 'AMZN', 'META'].map(stockName => (
+                {stocks.map(stockName => (
                   <Dropdown.Item
                     href=''
                     onClick={e => {
@@ -510,7 +538,7 @@ function Options () {
           {/* </Col> */}
         </div>
       </div>
-      <App data={data} isSelected={isSelected} />
+      <App data={data} isSelected={isSelected} scrolled={scrolled} />
     </>
   )
 }

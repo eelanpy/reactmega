@@ -109,3 +109,15 @@ select, option:checked {
 .col {
     display: inline;
 } */
+
+/* th button {
+    background-color: white;
+} */
+
+.bg-white button{
+    background-color: white;
+}
+
+.bg-grey button{
+    background-color: grey;
+}
