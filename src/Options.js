@@ -31,7 +31,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
 
-var stocks = ['AAPL', 'MSFT', 'META', 'AMZN']
+var stocks = ['AAPL', 'ADBE', 'AMD', 'AMZN', 'AXP', 'CRM', 'DLTR', 'GOOG', 'INTU', 'MA', 'META', 'MSFT', 'NFLX', 'NKE', 'NVDA', 'PYPL', 'QQQ', 'SHOP', 'V']
 
 function BasicExample (props) {
   const list = props.list === undefined ? stocks : props.list
