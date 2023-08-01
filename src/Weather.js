@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Image from 'react-bootstrap/Image'
-
+import Alert from 'react-bootstrap/Alert'
 import axios from 'axios'
 
 var link = ''
@@ -23,13 +23,32 @@ function titleCase (str) {
 function Card (props) {
   console.log(props.data)
 
-  if (props.data == undefined) {
+  if (props.data == undefined || props.data == []) {
     return (
-      <h3
-        style={{ visibility: props.submitted == true ? 'visible' : 'hidden' }}
+      <div
+        className='card text-bg-danger m-2'
+        style={{
+          visibility: props.submitted == true ? 'visible' : 'hidden'
+        }}
       >
-        That city is not found!
-      </h3>
+        <div className='card-body text-center' style={{ textAlign: 'center' }}>
+          <p
+            className='card-title font-italic'
+            style={{ fontSize: '2rem', fontWeight: 900 }}
+          >
+            This city is not found in our Weather Data!
+          </p>
+          <p
+            className='font-weight-normal'
+            style={{ fontSize: '1.75rem', fontWeight: 500 }}
+          >
+            Somehow the fields you submitted can't be found in our data.
+          </p>
+          <p style={{ fontSize: '1.5rem' }} className='font-weight-light'>
+            Solution: Try another city!
+          </p>
+        </div>
+      </div>
     )
   } else {
     return (
@@ -127,34 +146,36 @@ function Weather () {
 
   return (
     <>
-      <h1
-        className='mt-4'
-        style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
-      >
-        Weather Finder By City:
-      </h1>
-      <h3>
-        If you want to search by the country and city, type in the country code.
-        For example for kingston,ontario,canada, type{' '}
-        <strong>kingston,ca</strong>!
-      </h3>
+      <div className='container justify-md-content-center'>
+        <h1
+          className='mt-4'
+          style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
+        >
+          Weather Finder By City:
+        </h1>
+        <h3>
+          If you want to search by the country and city, type in the country
+          code. For example for kingston,ontario,canada, type{' '}
+          <strong>kingston,ca</strong>!
+        </h3>
 
-      <Row className='justify-content-md-center mb-2'>
-        <Col xs lg='3'>
-          <form onSubmit={submit}>
-            <Form.Control
-              type='text'
-              className={`mb-4`}
-              placeholder='Please type a city:'
-              value={city}
-              onChange={e => change(e)}
-              autoFocus
-            />
-          </form>
-        </Col>
-      </Row>
+        <Row className='justify-content-md-center mb-2'>
+          <Col xs lg='3'>
+            <form onSubmit={submit}>
+              <Form.Control
+                type='text'
+                className={`mb-4`}
+                placeholder='Please type a city:'
+                value={city}
+                onChange={e => change(e)}
+                autoFocus
+              />
+            </form>
+          </Col>
+        </Row>
 
-      <Card data={weather} submitted={submitted} />
+        <Card data={weather} submitted={submitted} />
+      </div>
     </>
   )
 }

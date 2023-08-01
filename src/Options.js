@@ -31,7 +31,6 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
 
-
 var stocks = [
   'AAPL',
   'ADBE',
@@ -53,9 +52,6 @@ var stocks = [
   'SHOP',
   'V'
 ]
-
-
-
 
 function BasicExample (props) {
   const list = props.list === undefined ? stocks : props.list
@@ -541,8 +537,8 @@ function Options () {
           </form>
           {/* </Col> */}
         </div>
+        <App data={data} isSelected={isSelected} scrolled={scrolled} />
       </div>
-      <App data={data} isSelected={isSelected} scrolled={scrolled} />
     </>
   )
 }
