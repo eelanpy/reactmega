@@ -31,7 +31,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
 
-<<<<<<< HEAD
+
 var stocks = [
   'AAPL',
   'ADBE',
@@ -53,9 +53,9 @@ var stocks = [
   'SHOP',
   'V'
 ]
-=======
-var stocks = ['AAPL', 'ADBE', 'AMD', 'AMZN', 'AXP', 'CRM', 'DLTR', 'GOOG', 'INTU', 'MA', 'META', 'MSFT', 'NFLX', 'NKE', 'NVDA', 'PYPL', 'QQQ', 'SHOP', 'V']
->>>>>>> a1a43f719bb5550cdea405098a9d1664b346e08d
+
+
+
 
 function BasicExample (props) {
   const list = props.list === undefined ? stocks : props.list
