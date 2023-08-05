@@ -1,7 +1,3 @@
-import Form from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-import Image from 'react-bootstrap/Image'
 import Spinner from 'react-bootstrap/Spinner'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -23,7 +19,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 // export default BasicExample;
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import React from 'react'
 
@@ -52,24 +48,6 @@ var stocks = [
   'SHOP',
   'V'
 ]
-
-function BasicExample (props) {
-  const list = props.list === undefined ? stocks : props.list
-  //   console.log(props.list[0])
-  return (
-    <Dropdown className='mt-5' style={{ display: 'inline' }}>
-      <Dropdown.Toggle variant='success' id='dropdown-basic'>
-        {props.text}:{' '}
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        {Array.from(list).map(stockName => (
-          <Dropdown.Item href='#/action-2'>{stockName}</Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  )
-}
 
 function numberWithCommas (x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
@@ -131,9 +109,9 @@ const ProductTable = props => {
                   type='button'
                   onClick={() => requestSort(key)}
                   className={getClassNamesFor(key)}
-                  style={{ backgroundColor: scrolled == true ? 'white' : '' }}
+                  style={{ backgroundColor: scrolled === true ? 'white' : '' }}
                 >
-                  {key.toUpperCase().includes('PROFIT_') == true
+                  {key.toUpperCase().includes('PROFIT_') === true
                     ? 'With_' + parseFloat(key.split('_')[1]) * 100 + '%'
                     : key.toUpperCase()}
                 </button>
@@ -288,7 +266,7 @@ Expiry            </button>
         <div
           className='card text-bg-danger m-2'
           style={{
-            visibility: props.isSelected == true ? 'visible' : 'hidden'
+            visibility: props.isSelected === true ? 'visible' : 'hidden'
           }}
         >
           <div
@@ -518,10 +496,10 @@ function Options () {
               type='submit'
               className='btn btn-primary'
               disabled={
-                stock == 'Stock' ||
-                optionType == 'Type' ||
-                monthsToExpire == 'Months of Expiry' ||
-                investAmt == 'To Invest:'
+                stock === 'Stock' ||
+                optionType === 'Type' ||
+                monthsToExpire === 'Months of Expiry' ||
+                investAmt === 'To Invest:'
                   ? true
                   : false
               }
@@ -532,7 +510,7 @@ function Options () {
               animation='border'
               variant='primary'
               className='mt-3'
-              style={{ visibility: isLoading == true ? 'visible' : 'hidden' }}
+              style={{ visibility: isLoading === true ? 'visible' : 'hidden' }}
             />
           </form>
           {/* </Col> */}

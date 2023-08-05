@@ -10,13 +10,11 @@ import ListGroup from 'react-bootstrap/ListGroup'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-
 function generateWords (w, notLetters) {
   try {
     w = w.toLowerCase()
 
     notLetters = notLetters.toLowerCase()
-    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
 
     const words = data.words
     var wordsFnd = []
@@ -30,7 +28,7 @@ function generateWords (w, notLetters) {
     for (let i = 0; i < words.length; i++) {
       if (
         words[i].match(pattern) != null &&
-        words[i].match(pattern)[0].length == words[i].length &&
+        words[i].match(pattern)[0].length === words[i].length &&
         words[i].match(no_letters_pattern) != null
       ) {
         const word =
@@ -52,11 +50,9 @@ function Hangman () {
   document.title = 'Hangman Cheatsheet'
   const [word, setWord] = useState('')
   const [notLetters, setNotLetters] = useState('')
-  const [wordLen, setWordLength] = useState(0)
-  var wordsFND
+
   const ChangeValue = event => {
     setWord(event.target.value)
-    setWordLength(word.length)
   }
 
   const ChangeNotLetter = event => {

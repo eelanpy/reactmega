@@ -11,34 +11,31 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
-
 const guesses = {}
 var tries = 0
 
 function LetUserPick (props) {
   console.log(props.randomNum)
-  const [validated, setValidated] = useState(false)
+
   const [correctGuess, setCorrectGuess] = useState(null)
   const [guess, setGuess] = useState('')
-  const [textAlert, setTextAlert] = useState('')
-  const [show, setShow] = useState(false)
 
   function store (e) {
-        parseInt(e.target.value)    
-        setGuess(e.target.value.replace(/\D/g, ""));
+    parseInt(e.target.value)
+    setGuess(e.target.value.replace(/\D/g, ''))
   }
 
   function check (guess) {
-    if (parseInt(guess) == parseInt(props.randomNum)) {
+    if (parseInt(guess) === parseInt(props.randomNum)) {
       setCorrectGuess(true)
-      setTextAlert('Correct! You got in ' + guesses.length + ' tries.')
+      // setTextAlert('Correct! You got in ' + guesses.length + ' tries.')
     } else {
       setCorrectGuess(false)
-      if (parseInt(guess) > props.randomNum) {
-        setTextAlert('Too High!')
-      } else {
-        setTextAlert('Too Low!')
-      }
+      // if (parseInt(guess) > props.randomNum) {
+      //   setTextAlert('Too High!')
+      // } else {
+      //   setTextAlert('Too Low!')
+      // }
       setGuess('')
     }
   }
@@ -81,7 +78,7 @@ function LetUserPick (props) {
             <Form.Control
               type='text'
               className={`mb-4 ${
-                correctGuess == true ? 'text-success border-success' : ''
+                correctGuess === true ? 'text-success border-success' : ''
               }`}
               placeholder='Your Guess:'
               onChange={e => store(e)}
@@ -98,34 +95,29 @@ function LetUserPick (props) {
         {Object.keys(guesses).map((g, i) => (
           <>
             <div className='d-flex justify-content-center'>
-                <Button
-                  
-                  className="btn mr-2"
-                  style={{marginRight: '20px'}}
-                  key={i.toString()}
-                  variant={
-                    parseInt(g) == parseInt(props.randomNum)
-                      ? 'outline-success active'
-                      : 'outline-danger active'
-                  }
-                >
-                  {g}
-                </Button>
-                <span className='pl-2'>
-                
-                </span>
-                <Button
-                  
-                  className='btn'
-                  
-                  variant={
-                    parseInt(g) == parseInt(props.randomNum)
-                      ? 'outline-success active'
-                      : 'outline-danger active'
-                  }
-                >
-                  {guesses[g]}
-                </Button>
+              <Button
+                className='btn mr-2'
+                style={{ marginRight: '20px' }}
+                key={i.toString()}
+                variant={
+                  parseInt(g) === parseInt(props.randomNum)
+                    ? 'outline-success active'
+                    : 'outline-danger active'
+                }
+              >
+                {g}
+              </Button>
+              <span className='pl-2'></span>
+              <Button
+                className='btn'
+                variant={
+                  parseInt(g) === parseInt(props.randomNum)
+                    ? 'outline-success active'
+                    : 'outline-danger active'
+                }
+              >
+                {guesses[g]}
+              </Button>
             </div>
             <br />
           </>
@@ -213,7 +205,7 @@ function Number () {
 const GenerateRandomNum = props => {
   const num = props.max
   var randomNum = Math.floor(Math.random() * (num - 1)) + 1
-  if (randomNum % 5 == 0) {
+  if (randomNum % 5 === 0) {
     randomNum = Math.floor(Math.random() * (num - 1)) + 1
   }
 

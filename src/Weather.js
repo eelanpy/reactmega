@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Image from 'react-bootstrap/Image'
-import Alert from 'react-bootstrap/Alert'
-import axios from 'axios'
-
-var link = ''
 
 function titleCase (str) {
   var splitStr = str.toLowerCase().split(' ')
@@ -23,12 +19,12 @@ function titleCase (str) {
 function Card (props) {
   console.log(props.data)
 
-  if (props.data == undefined || props.data == []) {
+  if (props.data === undefined || props.data === []) {
     return (
       <div
         className='card text-bg-danger m-2'
         style={{
-          visibility: props.submitted == true ? 'visible' : 'hidden'
+          visibility: props.submitted === true ? 'visible' : 'hidden'
         }}
       >
         <div className='card-body text-center' style={{ textAlign: 'center' }}>

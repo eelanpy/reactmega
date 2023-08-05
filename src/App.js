@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import Hangman from './Hangman'
 import Number from './Number'
@@ -48,7 +48,7 @@ const App = () => (
     </Navbar>
     <Routes>
       {links.map((w, i) => (
-        <Route key={i} path={`/${w[0].toLowerCase()}`} element={eval(w[1])} />
+        <Route key={i} path={`/${w[0].toLowerCase()}`} element={w[1]} />
       ))}
     </Routes>
   </>
