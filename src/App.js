@@ -6,6 +6,7 @@ import Number from './Number'
 import Weather from './Weather'
 import Movies from './Movies'
 import Options from './Options'
+import Login from './Login'
 
 import './App.css'
 
@@ -21,7 +22,8 @@ const links = [
   ['Number Guessing', <Number />],
   ['Weather App', <Weather />],
   ['Box Office/Budget Finder', <Movies />],
-  ['Stock Options', <Options />]
+  ['Stock Options', <Options />],
+  ['Login', <Login />]
 ]
 
 const App = () => (
@@ -46,6 +48,7 @@ const App = () => (
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
     <Routes>
       {links.map((w, i) => (
         <Route key={i} path={`/${w[0].toLowerCase()}`} element={w[1]} />

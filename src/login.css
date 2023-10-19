@@ -1,0 +1,49 @@
+
+
+.form-label {
+  font-weight: bold;
+  
+  font-size: 1.25rem;
+}
+.h4 {
+  font-weight:900;
+  font-size:225%;
+  
+}
+
+input {
+  text-align: left;
+}
+
+::-webkit-input-placeholder {
+  text-align: left;
+}
+
+:-moz-placeholder {
+  text-align: left;
+}
+
+
+.sign-in {
+  margin: 0;
+
+}
+
+
+
+/* .list-group div{
+  font-style: 'Roboto', sans-serif;
+
+  font-size: 1rem;
+  margin: 0;
+  background-color: white;
+  border: none;
+  color: auto;
+}
+
+.list-group span {
+ font-weight: 900; */
+
+.popover {
+  margin-top: 1.125rem;
+}

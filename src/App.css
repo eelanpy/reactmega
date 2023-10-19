@@ -83,3 +83,9 @@ body {
 }
 
 /* Options App: */
+
+body {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
