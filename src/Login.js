@@ -9,54 +9,15 @@ import { Tabs } from 'react-bootstrap'
 import { Col } from 'react-bootstrap'
 import { Overlay } from 'react-bootstrap'
 import { Popover } from 'react-bootstrap'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 import './login.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-// function Login () {
-//   const [name, setName] = useState('')
-
-//   const [logged, setIsLogged] = useState(false)
-
-//   function submit (e) {
-//     setIsLogged(true)
-//     e.preventDefault()
-//     localStorage.setItem('name', name)
-//     console.log(name)
-//   }
-//   return (
-//     <Container>
-//       <form onSubmit={submit}>
-//         <input
-//           className='form-control mt-5 w-25'
-//           value={name}
-//           onChange={e => setName(e.target.value)}
-//           autoFocus
-//         />
-//         <input
-//           className='form-control'
-//           value={name}
-//           onChange={e => setName(e.target.value)}
-//           autoFocus
-//         />
-//       </form>
-//       <h1>{logged === true ? localStorage.getItem('name') : ''}</h1>
-//     </Container>
-//   )
-// }
-
 function getType (type) {
-  return type == 'password' ? 'text' : 'password'
+  return type === 'password' ? 'text' : 'password'
 }
 
 function Login () {
-  //   localStorage.setItem(
-  //     'logged',
-  //     localStorage.getItem('email') !== '' &&
-  //       localStorage.getItem('email') !== null
-  //       ? true
-  //       : false
-  //   )
   const [type, setType] = useState('password')
   const [show, setShow] = useState(
     localStorage.getItem('email') !== '' &&
@@ -66,6 +27,11 @@ function Login () {
       ? false
       : true
   )
+  const [focused, setFocused] = useState(false);
+
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
+
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
@@ -80,11 +46,6 @@ function Login () {
 
   function submit (e) {
     e.preventDefault()
-
-    // if (email.includes('@') === true) {
-    //   localStorage.setItem('logged', true)
-    //   handleClose()
-    // }
 
     localStorage.setItem('email', email)
     localStorage.setItem('password', pwd)
@@ -158,7 +119,6 @@ function Login () {
                     className='mb-3'
                     controlId='exampleForm.ControlInput1'
                   >
-                    {/* <Form.Label>Email address</Form.Label> */}
                     <Form.Label column sm='3' for='floatingInputCustom2'>
                       Password:
                     </Form.Label>
@@ -179,6 +139,8 @@ function Login () {
                           display: 'inline-block',
                           borderRadius: '0.25rem 0 0 0.25rem'
                         }}
+                        onFocus={onFocus} 
+                        onBlur={onBlur}
                       />
                       <Button
                         variant='outline-primary'
@@ -203,11 +165,11 @@ function Login () {
                       </Button>
                     </Col>
                     <Col>
-                      <Overlay show={true} placement='bottom' className='pt-5'>
+                      <Overlay show={focused} placement='bottom' className='pt-5'>
                         <Popover id='popover-contained'>
-                          <PopoverHeader as='h3'>Hello</PopoverHeader>
+                          <PopoverHeader as='h3'>Password Requirements:</PopoverHeader>
                           <Popover.Body style={{ padding: 0 }}>
-                            <ListGroup>
+                            <ListGroup as="ol" numbered>
                               <ListGroup.Item
                                 style={{ borderRadius: 0, borderTop: 'none' }}
                                 variant={
@@ -216,7 +178,17 @@ function Login () {
                                     : 'danger'
                                 }
                               >
-                                <span>•</span> Must have at least 1 uppercase.
+                                Must have at least 1 uppercase.
+                              </ListGroup.Item>
+                              <ListGroup.Item
+                                style={{ borderRadius: 0, borderTop: 'none' }}
+                                variant={
+                                  /\d/.test(pwd) == true
+                                    ? 'success'
+                                    : 'danger'
+                                }
+                              >
+                                Must have at least 1 number.
                               </ListGroup.Item>
 
                               <ListGroup.Item
@@ -226,7 +198,7 @@ function Login () {
                                     : 'danger'
                                 }
                               >
-                                <span>•</span> Must have at least 1 lowercase
+                                Must have at least 1 lowercase
                                 letter.
                               </ListGroup.Item>
                               <ListGroup.Item
@@ -238,21 +210,21 @@ function Login () {
                                     : 'danger'
                                 }
                               >
-                                <span>•</span> Must have at least 1 symbol.
+                                Must have at least 1 symbol.
                               </ListGroup.Item>
                               <ListGroup.Item
                                 variant={pwd.length >= 4 ? 'success' : 'danger'}
                               >
-                                <span>•</span> Must have more than 4 characters.
+                                Must have more than 4 characters.
                               </ListGroup.Item>
                               <ListGroup.Item
                                 variant={
-                                  pwd.length <= 8 && pwd.length >= 4
+                                  pwd.length < 8 && pwd.length >= 4
                                     ? 'success'
                                     : 'danger'
                                 }
                               >
-                                <span>•</span> Must have less than 8 characters.
+                                Must have at most 8 characters.
                               </ListGroup.Item>
                             </ListGroup>
                           </Popover.Body>
@@ -288,19 +260,20 @@ function Login () {
                 ? 'visible'
                 : 'hidden'
           }}
-        >
-          <h2>Account Detauls:</h2>
+        > 
+          <h2 className='my-3 fw-bold' style={{textDecoration: 'underline'}}>Account Details:</h2>
 
           <Row className='justify-content-md-center mb-2'>
             <Col xs lg='10'>
               <form onSubmit={submit} className='input-group'>
                 <Button
                   style={{
-                    borderTopLeftRadius: '.25rem'
+                    borderTopLeftRadius: '.25rem',
+                    borderWidth: 'medium'
                   }}
                   variant='outline-secondary'
                   disabled
-                  className='text-black'
+                  className='text-black fw-bold'
                 >
                   Email:
                 </Button>
@@ -326,47 +299,6 @@ function Login () {
                 <Button variant='outline-primary' onClick={handleShow}>
                   <i class='bi bi-pencil-square'></i>
                 </Button>
-                {/* <Form.Control
-                  className='form-control text-wrap border-black'
-                  id='floatingInputCustom'
-                  type='password'
-                  placeholder='name@example.com'
-                  autoFocus
-                  //   onChange={e => {
-                  //     e.currentTarget.width = e.target.value.length + 'ch'
-                  //     setEmail(e.target.value)
-                  //     localStorage.setItem('email', e.target.value)
-                  //   }}
-                  //   value={
-                  //     localStorage.getItem('email') !== null &&
-                  //     localStorage.getItem('email') !== ''
-                  //       ? localStorage.getItem('email')
-                  //       : ''
-                  //   }
-                  value='abcde'
-                  disabled
-                />
-                <Button
-                  variant='outline-primary'
-                  onClick={e => {
-                    localStorage.setItem('logged', false)
-                    handleShow()
-                  }}
-                  style={{
-                    visibility:
-                      localStorage.getItem('email') !== '' &&
-                      localStorage.getItem('email') !== null &&
-                      localStorage.getItem('logged') == 'true'
-                        ? 'visible'
-                        : 'hidden',
-                    borderTopRadius: '.25rem'
-                  }}
-                  className='w-5 h-5'
-                >
-                  Sign In Another Account
-                </Button> */}
-                {/* <div className="input-group-append"> */}
-                {/* </div> */}
               </form>
             </Col>
           </Row>
@@ -375,10 +307,11 @@ function Login () {
               <form onSubmit={submit} className='input-group'>
                 <Button
                   style={{
-                    borderTopLeftRadius: '.25rem'
+                    borderTopLeftRadius: '.25rem',
+                    borderWidth: 'medium'
                   }}
                   variant='outline-secondary'
-                  className='text-black'
+                  className='fw-bold text-black'
                   disabled
                 >
                   Password:
@@ -405,53 +338,10 @@ function Login () {
                 <Button variant='outline-primary' onClick={handleShow}>
                   <i class='bi bi-pencil-square'></i>
                 </Button>
-                {/* <Form.Control
-                  className='form-control text-wrap border-black'
-                  id='floatingInputCustom'
-                  type='password'
-                  placeholder='name@example.com'
-                  autoFocus
-                  //   onChange={e => {
-                  //     e.currentTarget.width = e.target.value.length + 'ch'
-                  //     setEmail(e.target.value)
-                  //     localStorage.setItem('email', e.target.value)
-                  //   }}
-                  //   value={
-                  //     localStorage.getItem('email') !== null &&
-                  //     localStorage.getItem('email') !== ''
-                  //       ? localStorage.getItem('email')
-                  //       : ''
-                  //   }
-                  value='abcde'
-                  disabled
-                />
-                <Button
-                  variant='outline-primary'
-                  onClick={e => {
-                    localStorage.setItem('logged', false)
-                    handleShow()
-                  }}
-                  style={{
-                    visibility:
-                      localStorage.getItem('email') !== '' &&
-                      localStorage.getItem('email') !== null &&
-                      localStorage.getItem('logged') == 'true'
-                        ? 'visible'
-                        : 'hidden',
-                    borderTopRadius: '.25rem'
-                  }}
-                  className='w-5 h-5'
-                >
-                  Sign In Another Account
-                </Button> */}
-                {/* <div className="input-group-append"> */}
-                {/* </div> */}
               </form>
             </Col>
           </Row>
-
           <br />
-
           <br />
           <br />
         </Container>
