@@ -49,6 +49,8 @@ var stocks = [
   'V'
 ]
 
+
+
 function numberWithCommas (x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 }
@@ -150,110 +152,115 @@ Expiry            </button>
             <tr>
               <td>{item.stock.toUpperCase()}</td>
               <td>{item.type.toUpperCase()}</td>
-              <td>{item.stock_price}</td>
+              <td>${String(numberWithCommas(item.stock_price))}</td>
               <td>{item.expiry}</td>
-              <td>{item.strike}</td>
-              <td>{item.ask}</td>
-              <td>{item.units}</td>
-              <td>{Math.round(item.invested)}</td>
+              <td>${String(numberWithCommas(item.strike))}</td>
+              <td>${String(numberWithCommas(item.ask))}</td>
+              <td>{numberWithCommas(item.units)}</td>
+              <td>${String(numberWithCommas(Math.round(item.invested)))}</td>
               <td
                 className={
                   item['profit_0'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0']))}
+                                 
+                                 {String(numberWithCommas(Math.round(item['profit_0']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.01'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.01']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.01']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.01']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.02'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.02']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.02']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.02']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.03'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.03']))}
+                                                 {String(numberWithCommas(Math.round(item['profit_0.03']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.03']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.04'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.04']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.04']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.04']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.05'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.05']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.05']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.05']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.06'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.06']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.06']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.06']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.1'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.1']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.1']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.1']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.15'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.15']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.15']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.15']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.2'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.2']))}
+                                                                 {String(numberWithCommas(Math.round(item['profit_0.2']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.2']))).replace('-', "-$")}
               </td>
               <td
                 className={
                   item['profit_0.25'] < 0
-                    ? 'bg-danger-subtle text-black'
-                    : 'bg-success-subtle text-black'
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
+
+
+
+
                 }
               >
-                {numberWithCommas(Math.round(item['profit_0.25']))}
+                                                 {String(numberWithCommas(Math.round(item['profit_0.25']))).indexOf('-') === -1 ? '+$' : ''}{String(numberWithCommas(Math.round(item['profit_0.25']))).replace('-', "-$")}
               </td>
             </tr>
           ))}

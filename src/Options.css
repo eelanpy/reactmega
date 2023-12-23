@@ -83,10 +83,10 @@ table td:last-child {
 /* tbody tr td {
     padding: 0.5px;
 } */
-tbody {
-    /* font-weight: 700; */
+/* tbody {
+    
     color: black;
-}
+} */
 
 .text-white {
     color: black;
@@ -120,4 +120,14 @@ select, option:checked {
 
 .bg-grey button{
     background-color: grey;
+}
+
+.bg-danger-subtle {
+    color: red;
+    
+}
+
+.bg-success-subtle {
+    color: green;
+    
 }
