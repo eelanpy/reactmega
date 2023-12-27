@@ -1,11 +1,11 @@
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import {Col} from 'react-bootstrap'
+import {Row} from 'react-bootstrap'
 // import Image from 'react-bootstrap/Image';
 // import { useEffect, useState } from 'react';
 import { useState } from 'react'
 // import Card from 'react-bootstrap/Card'
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner'
+import {Spinner} from 'react-bootstrap'
 
 // function removeMatchedDuplicates(list) {
 //     const mySet1 = new Set();

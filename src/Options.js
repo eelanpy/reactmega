@@ -1,5 +1,5 @@
-import Spinner from 'react-bootstrap/Spinner'
-import Dropdown from 'react-bootstrap/Dropdown'
+import {Spinner} from 'react-bootstrap'
+import {Dropdown} from 'react-bootstrap'
 
 // function BasicExample() {
 //   return (
@@ -26,6 +26,7 @@ import React from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Options.css'
+
 
 var stocks = [
   'AAPL',
