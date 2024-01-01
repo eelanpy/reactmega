@@ -8,7 +8,7 @@ import Movies from './Movies'
 import Options from './Options'
 import Login from './Login'
 
-import './App.css'
+
 
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
@@ -16,14 +16,14 @@ import Nav from 'react-bootstrap/Nav'
 import { NavLink } from 'react-router-dom'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import './App.css'
 const links = [
-  ['Hangman', <Hangman />],
-  ['Number Guessing', <Number />],
-  ['Weather App', <Weather />],
-  ['Box Office/Budget Finder', <Movies />],
-  ['Stock Options', <Options />],
-  ['Login', <Login />]
+  ['Hangman', <Hangman />, false],
+  ['Number Guessing', <Number />, false],
+  ['Weather App', <Weather />,false],
+  ['Box Office/Budget Finder', <Movies />, false],
+  ['Stock Options', <Options />, false],
+  ['Login', <Login />,false]
 ]
 
 const App = () => (
@@ -40,7 +40,7 @@ const App = () => (
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>
             {links.map((w, i) => (
-              <NavLink key={i} id='RouterNavLink' to={`/${w[0].toLowerCase()}`}>
+              <NavLink key={i} id='RouterNavLink' classname={links[i][2] == true ? 'active' : ''} to={`/${w[0].toLowerCase()}`} onClick={(e) => {links[i][2] = true}}>
                 {w[0]}
               </NavLink>
             ))}

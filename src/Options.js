@@ -50,7 +50,36 @@ var stocks = [
   'V'
 ]
 
+function filter (inputStock, listStocks) {
+  console.log(listStocks);
+  var filteredStocks = []
+  for(let i = 0; i<listStocks.length; i++) {
+    if(listStocks[i].toLowerCase().startsWith(inputStock.toLowerCase()) === true) {
+      filteredStocks.push(listStocks[i])
+    }
+  }
+  return (filteredStocks.length < 1 ? ['Stock Not Found!'] : filteredStocks)
+} 
 
+// async function fetchTicks () {
+//   var tickUrl = 'https://raw.githubusercontent.com/eelanpy/reactmega/main/src/stock_list.json'
+    
+//   console.log(tickUrl)
+//   const responseTick = await fetch(tickUrl)
+//   const ticks = await responseTick.json()
+//   //   setIsLoading(false)
+//   return ticks
+// }
+// ;(async () => {
+//   console.log(await fetchTicks())
+//   stocks = await fetchTicks()
+//   stocks = stocks.sort()
+
+//   // console.log(data)
+  
+  
+  
+// })()
 
 function numberWithCommas (x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
@@ -328,6 +357,7 @@ function App (props) {
 //           { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
 
 function Options () {
+  const [inputStock, setInputStock] = useState('')
   const [stock, setStock] = useState('Stock')
   const [optionType, setOptionType] = useState('Type')
   const [monthsToExpire, setMonthsToExpire] = useState('Months of Expiry')
@@ -390,7 +420,7 @@ function Options () {
         <div className='d-flex justify-content-center'>
           {/* <Col xs lg='8'> */}
           <form onSubmit={submit}>
-            <Dropdown className='m-2' style={{ display: 'inline' }}>
+            <Dropdown style={{ display: 'inline' }}>
               <Dropdown.Toggle
                 variant={stock === 'Stock' ? 'outline-info' : 'info'}
                 id='dropdown-basic'
@@ -399,12 +429,21 @@ function Options () {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {stocks.map(stockName => (
+              <input
+          autoFocus
+          onChange={e => setInputStock(e.target.value.toUpperCase())}
+          value={inputStock}
+          className="mx-3 my-2 w-auto form-control text-info"
+          placeholder="Type ticker to filter..."
+
+        />
+                {filter(inputStock, stocks).map(stockName => (
                   <Dropdown.Item
                     href=''
                     onClick={e => {
                       setStock(e.target.innerText)
                     }}
+                    className='text-info'
                   >
                     {stockName}
                   </Dropdown.Item>
@@ -426,7 +465,7 @@ function Options () {
                   <>
                     <Dropdown.Item
                       href=''
-                      className=''
+                      className='text-secondary'
                       onClick={e => {
                         setOptionType(e.target.innerText)
                       }}
@@ -465,6 +504,7 @@ function Options () {
                     onClick={e => {
                       setMonthsToExpire(e.target.innerText)
                     }}
+                    className='text-success'
                   >
                     {stockName}
                   </Dropdown.Item>
@@ -494,6 +534,7 @@ function Options () {
                     onClick={e => {
                       setInvestAmt(e.target.innerText)
                     }}
+                    className='text-warning'
                   >
                     {stockName}
                   </Dropdown.Item>

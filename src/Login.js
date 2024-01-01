@@ -76,6 +76,7 @@ function Login () {
           animation={true}
           backdrop='static'
           keyboard={false}
+          className='mb-0 pb-0'
         >
           <Tabs
             defaultActiveKey='sign-up'
@@ -165,8 +166,8 @@ function Login () {
                       </Button>
                     </Col>
                     <Col>
-                      <Overlay show={focused} placement='bottom' className='pt-5'>
-                        <Popover id='popover-contained'>
+                      <Overlay show={focused} placement='bottom'>
+                        <Popover>
                           <PopoverHeader as='h3'>Password Requirements:</PopoverHeader>
                           <Popover.Body style={{ padding: 0 }}>
                             <ListGroup as="ol" numbered>
@@ -224,7 +225,7 @@ function Login () {
                                     : 'danger'
                                 }
                               >
-                                Must have at most 8 characters.
+                                Must have less than 8 characters.
                               </ListGroup.Item>
                             </ListGroup>
                           </Popover.Body>

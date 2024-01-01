@@ -131,3 +131,19 @@ select, option:checked {
     color: green;
     
 }
+
+input.text-info:focus, input.text-info, input.text-info:hover  {
+    border-radius: 2px;
+    background-color: white;
+}
+
+.text-info, .text-secondary, .text-warning, .text-success {
+    border-radius: 2px;
+}
+
+.text-info:hover, .text-secondary:hover, .text-warning:hover, .text-success:hover {
+    background-color: auto;
+}
+
+
+

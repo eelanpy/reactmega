@@ -89,3 +89,20 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+a:hover {
+  color: #87CEEB;
+  
+  text-decoration: none;
+}
+
+a.active {
+  color: #87CEEB;
+} 
+
+.navbar-toggler:active, 
+.navbar-toggler:hover, 
+.navbar-toggler:focus  {
+  border: 1px solid rgba(0,0,0, 0.15);
+  box-shadow: none;
+}
