@@ -3,13 +3,18 @@
 }
 
 nav {
-  width: 100%;
+  /* width: 300%; */
 }
 
 nav {
   text-align: left;
   background: #ee9972;
-  padding: 20px;
+  /* padding: 20px; */
+  
+}
+
+.navbar-toggler {
+  text-align: left;
 }
 
 nav a {
