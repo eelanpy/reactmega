@@ -8,7 +8,7 @@ import Movies from "./components/Movies";
 import Options from "./components/Options";
 import Login from "./components/Login";
 import MathematicaTestOnline from "./components/Mathematica Test";
-
+import DashboardMathematica from "./components/DashboardMathematica";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -24,6 +24,7 @@ const links = [
   ["Stock Options", <Options />, false],
   ["Login", <Login />, false],
   ["Mathematica", <MathematicaTestOnline />, false],
+  ["Dashboard", <DashboardMathematica />, false],
 ];
 
 const App = () => (

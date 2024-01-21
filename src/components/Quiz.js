@@ -120,8 +120,8 @@ function putData(id, answers,exam_name, exam_year, percentage) {
         answers: answers,
         dt: id.split('-').splice(1,).join('-'),
         exam_name: exam_name,
-        exam_year: exam_year,
-        mark: percentage,
+        exam_year: `${String(exam_year)}`,
+        mark: `${String(percentage)}%`,
         student: id.split('-')[0],
       },
     },
@@ -135,7 +135,7 @@ function putData(id, answers,exam_name, exam_year, percentage) {
   };
 
   fetch(
-    "https://2mgmf4c18j.execute-api.us-east-2.amazonaws.com/prod/DynamoDBManager",
+    "https://bc85o4egqi.execute-api.us-east-2.amazonaws.com/test/DynamoDBManager",
     requestOptions
   )
     .then((response) => response.text())

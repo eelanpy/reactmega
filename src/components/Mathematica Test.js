@@ -1,9 +1,11 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import { Dropdown } from "react-bootstrap";
 import { useState } from "react";
 
 import Quiz from "./Quiz";
+import DashboardMathematica from './DashboardMathematica'
 import "../styles/mathematica.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 function MathematicaTestOnline() {
   document.title = "Mathematica";
 
@@ -12,7 +14,16 @@ function MathematicaTestOnline() {
   const [examType, setExamType] = useState("Exam Type:");
   const [year, setYear] = useState("Year:");
   const [quizStarted, setQuizStarted] = useState(false);
+  const [studentEntered, setStudentEntered] = useState(false)
 
+  function studentEvent(e){
+    console.log(e);
+    if(e.key == 'Enter') {
+      e.preventDefault()
+      setStudentEntered(true)
+      console.log(studentEntered);
+    }
+  }
 
   const exams = {
     Thales: { gr: 3, Contest: 30 },
@@ -51,11 +62,13 @@ function MathematicaTestOnline() {
         </strong>{" "}
         Pick an Exam you would want to practice:{" "}
       </h3>
-      <input style={{display: quizStarted == true ? 'none' : 'inline', width: "15%", textAlign: 'left'}}placeholder="Student Name:" className="form-control mr-2 " value={student} onChange={(e) => {setStudent(e.target.value)}}/>
+      <input style={{display: quizStarted == true ? 'none' : 'inline', width: "15%", textAlign: 'left'}}placeholder="Student Name:" className="form-control mr-2 " value={student} onChange={(e) => {setStudent(e.target.value)}} onKeyDown={(e) => {studentEvent(e)}}/>
+      {/* <DashboardQuiz student={student}/> */}
+
       
       <Dropdown
         style={{
-          display: quizStarted == true ? "none" : "inline",
+          display: quizStarted == true || studentEntered == false ? "none" : "inline",
         }}
         className="mr-2"
       >
@@ -82,7 +95,7 @@ function MathematicaTestOnline() {
       </Dropdown>
       <Dropdown
         style={{
-          display: quizStarted == true ? "none" : "inline",
+          display: quizStarted == true  || studentEntered == false? "none" : "inline",
         }}
       >
         <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
@@ -107,7 +120,7 @@ function MathematicaTestOnline() {
       </Dropdown>
       <Dropdown
         style={{
-          display: quizStarted == true ? "none" : "inline",
+          display: quizStarted == true || studentEntered == false? "none" : "inline",
         }}
         className="rounded-left"
       >
@@ -142,10 +155,12 @@ function MathematicaTestOnline() {
         disabled={
           exam == "Exam Name:" || year == "Year:" || examType == "Exam Type:" || student == "" ? true : false
         }
-        style={{ display: quizStarted == true ? "none" : "" }}
+        style={{ display: quizStarted == true || studentEntered == false ? "none" : "" }}
       >
         Start Quiz!
       </button>
+      <br />
+      
       <Quiz
         quizStarted={quizStarted}
         examType={examType}
@@ -154,6 +169,8 @@ function MathematicaTestOnline() {
         year={year}
         student={student}
       />
+            
+
     </div>
   );
 }
