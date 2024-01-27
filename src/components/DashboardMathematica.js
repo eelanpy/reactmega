@@ -1,56 +1,53 @@
 import { useState } from "react";
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function DashboardMathematica(props) {
   const [student, setStudent] = useState("");
-  const [submissions, setSubmissions] = useState([[],[]]);
-  const [entered, setEntered] = useState(false)
-  
+  const [submissions, setSubmissions] = useState([[], []]);
+  const [entered, setEntered] = useState(false);
 
   function getData(e) {
-    
     if (e.keyCode == 13) {
-      if(student !== "") {
-        setEntered(true)
+      if (student !== "") {
+        setEntered(true);
       }
       try {
-
         var raw = JSON.stringify({
           operation: "read",
           payload: {
-            student: student,
+            student: student.toLowerCase(),
           },
         });
-      
+
         var requestOptions = {
           method: "POST",
-          body: raw
           
+          
+         
+          body: raw,
         };
-      async function fetchSubmissions() {
-        var url2 =
-          "https://bc85o4egqi.execute-api.us-east-2.amazonaws.com/test/DynamoDBManager";
-        const response2 = await fetch(url2, requestOptions);
-        const data2 = await response2.json();
-        // return [Object.values(data)];
-        
-        return data2;
-      }
+        async function fetchSubmissions() {
+          var url2 =
+            "https://bc85o4egqi.execute-api.us-east-2.amazonaws.com/test/DynamoDBManager";
+          const response2 = await fetch(url2, requestOptions);
+          const data2 = await response2.json();
+          // return [Object.values(data)];
 
-      (async () => {
-        setSubmissions(await fetchSubmissions());
-        
-      })();
+          return data2;
+        }
+
+        (async () => {
+          setSubmissions(await fetchSubmissions());
+        })();
+      } catch {
+        setSubmissions([[], []]);
+      }
     }
-    catch {
-      setSubmissions([[],[]])
-    }
-    }
-    
-    
   }
 
-
-  
   //   var raw = JSON.stringify({
 
   //     "operation": "read",
@@ -106,25 +103,26 @@ function DashboardMathematica(props) {
         placeholder="Student Name: "
         className="form-control w-25 m-0 m-auto pb-2 text-left"
         onChange={(e) => {
-          setStudent(e.target.value);
+          setStudent(e.target.value.toLowerCase());
         }}
         onKeyDown={(e) => {
           getData(e);
         }}
       />
       <br />
-      <table class="table table-striped table-info" style={{display: entered === false ? 'none' : 'inline'}}>
+      <table
+        class="table table-striped"
+        style={{ display: entered === false ? "none" : "inline" }}
+      >
         <thead>
           <tr>
-          <th scope="col" className=" text-center">
-            id
-            </th>
-            <th scope="col" className=" text-center">
-            dt
-            </th>
+            
 
             <th scope="col" className=" text-center">
               Student
+            </th>
+            <th scope="col" className=" text-center">
+              dt
             </th>
             <th scope="col" className=" text-center">
               exam year
@@ -133,25 +131,25 @@ function DashboardMathematica(props) {
               exam name
             </th>
             <th scope="col" className=" text-center">
+              exam type
+            </th>
+            <th scope="col" className=" text-center">
               mark
             </th>
           </tr>
         </thead>
         <tbody>
-          {submissions[1].map((element,idx) => (
+          {submissions[1].map((element, idx) => (
             <tr>
-
-              
-              <td>{submissions[1][idx]["id"]}</td>
+              <td>{capitalizeFirstLetter(submissions[1][idx]["student"])}</td>
               <td>{submissions[1][idx]["dt"]}</td>
-              <td>{submissions[1][idx]["student"]}</td>
+
               <td>{submissions[1][idx]["exam_year"]}</td>
-              <td>{submissions[1][idx]["exam_name"]}</td>
+              <td>{capitalizeFirstLetter(submissions[1][idx]["exam_name"].split('_')[0])}</td>
+              <td>{capitalizeFirstLetter(submissions[1][idx]["exam_name"].split('_')[1])}</td>
               <td>{submissions[1][idx]["mark"]}</td>
             </tr>
           ))}
-         
-          
         </tbody>
       </table>
     </>

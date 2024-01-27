@@ -198,7 +198,8 @@ function Quiz(props) {
     
     
 
-    const id = props.student + '-' + d.toISOString();
+    let id = props.student.toLowerCase() + '-' + d.toISOString();
+    id = id.toLowerCase()
     console.log(id);
     putData(id, checkAnswer(data, correctAnswers, props).correctQuestions, `${props.exam.toLowerCase()}_${props.examType.toLowerCase()}`, props.year, checkAnswer(data, correctAnswers, props).percentage)
 
