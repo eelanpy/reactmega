@@ -26,6 +26,7 @@ const links = [
   ["Login", <Login />, false],
   ["Mathematica", <MathematicaTestOnline />, false],
   ["Dashboard", <DashboardMathematica />, false],
+   ["ApiTester", <ApiTester />, false],
 ];
 
 const App = () => (
