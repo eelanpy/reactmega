@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import MathematicaTestOnline from "./components/Mathematica Test";
 import DashboardMathematica from "./components/DashboardMathematica";
 import Container from "react-bootstrap/Container";
+import ApiTester from './components/ApiTester'
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
