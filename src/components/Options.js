@@ -433,7 +433,7 @@ function Options() {
     e.preventDefault();
 
     async function fetchData() {
-      var url = `https://pfs2dz5045.execute-api.us-east-2.amazonaws.com/ktest/koptions?stock=${stock.toLowerCase()}&option_type=${optionType
+      var url = `https://rh4wkswlnj.execute-api.us-east-2.amazonaws.com/test/yahoo_option?stock=${stock.toLowerCase()}&option_type=${optionType
         .split(" Option")[0]
         .toLowerCase()}&months_to_expire=${parseInt(
         monthsToExpire.split(" Month")[0]
