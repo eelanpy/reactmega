@@ -274,22 +274,7 @@ Expiry            </button>
                   numberWithCommas(Math.round(item['profit_0.05']))
                 ).replace('-', '-$')}
               </td>
-              <td
-                className={
-                  item['profit_0.5'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
-                }
-              >
-                {String(
-                  numberWithCommas(Math.round(item['profit_0.5']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
-                {String(
-                  numberWithCommas(Math.round(item['profit_0.5']))
-                ).replace('-', '-$')}
-              </td>
+              
               <td
                 className={
                   item['profit_0.1'] < 0
@@ -352,6 +337,22 @@ Expiry            </button>
                   : ''}
                 {String(
                   numberWithCommas(Math.round(item['profit_0.25']))
+                ).replace('-', '-$')}
+              </td>
+                <td
+                className={
+                  item['profit_0.5'] < 0
+                    ? 'bg-danger-subtle'
+                    : 'bg-success-subtle'
+                }
+              >
+                {String(
+                  numberWithCommas(Math.round(item['profit_0.5']))
+                ).indexOf('-') === -1
+                  ? '+$'
+                  : ''}
+                {String(
+                  numberWithCommas(Math.round(item['profit_0.5']))
                 ).replace('-', '-$')}
               </td>
             </tr>
