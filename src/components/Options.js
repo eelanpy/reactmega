@@ -276,18 +276,18 @@ Expiry            </button>
               </td>
               <td
                 className={
-                  item['profit_0.06'] < 0
+                  item['profit_0.5'] < 0
                     ? 'bg-danger-subtle'
                     : 'bg-success-subtle'
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.06']))
+                  numberWithCommas(Math.round(item['profit_0.5']))
                 ).indexOf('-') === -1
                   ? '+$'
                   : ''}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.06']))
+                  numberWithCommas(Math.round(item['profit_0.5']))
                 ).replace('-', '-$')}
               </td>
               <td
