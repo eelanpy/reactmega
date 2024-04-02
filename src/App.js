@@ -23,7 +23,7 @@ const links = [
   ["Weather App", <Weather />, false],
   ["Box Office", <Movies />, false],
   ["Stock Options", <Options />, false],
-  ["Login", <Login />, false],
+  
   ["Mathematica", <MathematicaTestOnline />, false],
   ["Dashboard", <DashboardMathematica />, false],
    ["ApiTester", <ApiTester />, false],

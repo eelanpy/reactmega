@@ -18,10 +18,17 @@ function ApiTester () {
 
       var url2 = apiLink + apiQuery
 
-      const response2 = await fetch(url2)
+      try {
+        const response2 = await fetch(url2)
       console.log(response2)
       const data2 = await response2.json()
       return data2
+      }
+
+      catch {
+        return [];
+      }
+      
     }
     ;(async () => {
       setApiData(await fetchData())

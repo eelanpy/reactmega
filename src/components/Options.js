@@ -1,47 +1,43 @@
-import { Spinner } from 'react-bootstrap'
-import { Dropdown } from 'react-bootstrap'
+import { Spinner } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
+import { useState } from "react";
 
-import { useState } from 'react'
+import tickers from "../dataFiles/tickers.json";
 
-import React from 'react'
+import React from "react";
 
 // import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../styles/Options.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/Options.css";
 
-var stocks = [
-  'AAPL',
-  'ADBE',
-  'AMD',
-  'AMZN',
-  'AXP',
-  'CRM',
-  'DLTR',
-  'GOOG',
-  'INTU',
-  'MA',
-  'META',
-  'MSFT',
-  'NFLX',
-  'NKE',
-  'NVDA',
-  'PYPL',
-  'QQQ',
-  'SHOP',
-  'V'
-]
+var stocks = tickers;
 
-function filter (inputStock, listStocks) {
-  console.log(listStocks)
+function filter(inputStock, listStocks) {
+  console.log(listStocks);
+  
+  
   var filteredStocks = []
-  for (let i = 0; i < listStocks.length; i++) {
-    if (
-      listStocks[i].toLowerCase().startsWith(inputStock.toLowerCase()) === true
-    ) {
-      filteredStocks.push(listStocks[i])
+  
+
+  
+    for (let i = 0; i < listStocks.length; i++) {
+      
+      if (
+        listStocks[i].toLowerCase().startsWith(inputStock.toLowerCase()) ===
+        true
+      ) {
+        
+        filteredStocks.push(listStocks[i]);
+
+      }
     }
+  if (inputStock === '') {
+    var filteredStocks = listStocks.slice(0,10);
+    filteredStocks.push('...')
+    return filteredStocks
   }
-  return filteredStocks.length < 1 ? ['Stock Not Found!'] : filteredStocks
+  return filteredStocks.length < 1 ? [] : filteredStocks;
+
 }
 
 // async function fetchTicks () {
@@ -62,70 +58,70 @@ function filter (inputStock, listStocks) {
 
 // })()
 
-function numberWithCommas (x) {
-  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const useSortableData = (items, config = null) => {
-  const [sortConfig, setSortConfig] = React.useState(config)
+  const [sortConfig, setSortConfig] = React.useState(config);
 
   const sortedItems = React.useMemo(() => {
-    let sortableItems = [...items]
+    let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1
+          return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1
+          return sortConfig.direction === "ascending" ? 1 : -1;
         }
-        return 0
-      })
+        return 0;
+      });
     }
-    return sortableItems
-  }, [items, sortConfig])
+    return sortableItems;
+  }, [items, sortConfig]);
 
-  const requestSort = key => {
-    let direction = 'ascending'
+  const requestSort = (key) => {
+    let direction = "ascending";
     if (
       sortConfig &&
       sortConfig.key === key &&
-      sortConfig.direction === 'ascending'
+      sortConfig.direction === "ascending"
     ) {
-      direction = 'descending'
+      direction = "descending";
     }
-    setSortConfig({ key, direction })
-  }
+    setSortConfig({ key, direction });
+  };
 
-  return { items: sortedItems, requestSort, sortConfig }
-}
+  return { items: sortedItems, requestSort, sortConfig };
+};
 
-const ProductTable = props => {
-  const scrolled = props.scrolled
-  console.log(props.products)
-  const { items, requestSort, sortConfig } = useSortableData(props.products)
-  const getClassNamesFor = name => {
+const ProductTable = (props) => {
+  const scrolled = props.scrolled;
+  console.log(props.products);
+  const { items, requestSort, sortConfig } = useSortableData(props.products);
+  const getClassNamesFor = (name) => {
     if (!sortConfig) {
-      return
+      return;
     }
-    return sortConfig.key === name ? sortConfig.direction : undefined
-  }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
   try {
     return (
-      <table className='mt-2'>
+      <table className="mt-2" id="options-tbl">
         {/* <caption>Products</caption> */}
         <thead>
           <tr>
-            {Object.keys(items[0]).map(key => (
+            {Object.keys(items[0]).map((key) => (
               <th>
                 <button
-                  type='button'
+                  type="button"
                   onClick={() => requestSort(key)}
                   className={getClassNamesFor(key)}
-                  style={{ backgroundColor: scrolled === true ? 'white' : '' }}
+                  style={{ backgroundColor: scrolled === true ? "white" : "" }}
                 >
-                  {key.toUpperCase().includes('PROFIT_') === true
-                    ? 'With_' + parseFloat(key.split('_')[1]) * 100 + '%'
+                  {key.toUpperCase().includes("PROFIT_") === true
+                    ? "With_" + parseFloat(key.split("_")[1]) * 100 + "%"
                     : key.toUpperCase()}
                 </button>
               </th>
@@ -161,254 +157,247 @@ Expiry            </button>
         <tbody>
           {items.map((item, idx) => (
             <tr>
-              <td style={{ color: 'black' }}>{item.stock.toUpperCase()}</td>
-              <td style={{ color: 'black' }}>{item.type.toUpperCase()}</td>
-              <td style={{ color: 'black' }}>
+              <td style={{ color: "black" }}>{item.stock.toUpperCase()}</td>
+              <td style={{ color: "black" }}>{item.type.toUpperCase()}</td>
+              <td style={{ color: "black" }}>
                 ${String(numberWithCommas(item.stock_price))}
               </td>
-              <td style={{ color: 'black' }}>{item.expiry}</td>
-              <td style={{ color: 'black' }}>
+              <td style={{ color: "black" }}>{item.expiry}</td>
+              <td style={{ color: "black" }}>
                 ${String(numberWithCommas(item.strike))}
               </td>
-              <td style={{ color: 'black' }}>
+              <td style={{ color: "black" }}>
                 ${String(numberWithCommas(item.ask))}
               </td>
-              <td style={{ color: 'black' }}>{numberWithCommas(item.units)}</td>
-              <td style={{ color: 'black' }}>
+              <td style={{ color: "black" }}>{numberWithCommas(item.units)}</td>
+              <td style={{ color: "black" }}>
                 ${String(numberWithCommas(Math.round(item.invested)))}
               </td>
               <td
                 className={
-                  item['profit_0'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
-                {String(numberWithCommas(Math.round(item['profit_0']))).indexOf(
-                  '-'
+                {String(numberWithCommas(Math.round(item["profit_0"]))).indexOf(
+                  "-"
                 ) === -1
-                  ? '+$'
-                  : ''}
-                {String(numberWithCommas(Math.round(item['profit_0']))).replace(
-                  '-',
-                  '-$'
+                  ? "+$"
+                  : ""}
+                {String(numberWithCommas(Math.round(item["profit_0"]))).replace(
+                  "-",
+                  "-$"
                 )}
               </td>
               <td
                 className={
-                  item['profit_0.01'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.01"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.01']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.01"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.01']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.01"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.02'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.02"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.02']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.02"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.02']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.02"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.03'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.03"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.03']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.03"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.03']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.03"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.04'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.04"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.04']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.04"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.04']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.04"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.05'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.05"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.05']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.05"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.05']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.05"]))
+                ).replace("-", "-$")}
               </td>
-              
+
               <td
                 className={
-                  item['profit_0.1'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.1"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.1']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.1"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.1']))
-                ).replace('-', '-$')}
-              </td>
-              <td
-                className={
-                  item['profit_0.15'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
-                }
-              >
-                {String(
-                  numberWithCommas(Math.round(item['profit_0.15']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
-                {String(
-                  numberWithCommas(Math.round(item['profit_0.15']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.1"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.2'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.15"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.2']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.15"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.2']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.15"]))
+                ).replace("-", "-$")}
               </td>
               <td
                 className={
-                  item['profit_0.25'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.2"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.25']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.2"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.25']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.2"]))
+                ).replace("-", "-$")}
               </td>
-                <td
+              <td
                 className={
-                  item['profit_0.5'] < 0
-                    ? 'bg-danger-subtle'
-                    : 'bg-success-subtle'
+                  item["profit_0.25"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
                 }
               >
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.5']))
-                ).indexOf('-') === -1
-                  ? '+$'
-                  : ''}
+                  numberWithCommas(Math.round(item["profit_0.25"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
                 {String(
-                  numberWithCommas(Math.round(item['profit_0.5']))
-                ).replace('-', '-$')}
+                  numberWithCommas(Math.round(item["profit_0.25"]))
+                ).replace("-", "-$")}
+              </td>
+              <td
+                className={
+                  item["profit_0.5"] < 0
+                    ? "bg-danger-subtle"
+                    : "bg-success-subtle"
+                }
+              >
+                {String(
+                  numberWithCommas(Math.round(item["profit_0.5"]))
+                ).indexOf("-") === -1
+                  ? "+$"
+                  : ""}
+                {String(
+                  numberWithCommas(Math.round(item["profit_0.5"]))
+                ).replace("-", "-$")}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    )
+    );
   } catch {
     return (
       <>
         <div
-          className='card text-bg-danger m-2'
+          className="card text-bg-danger m-2"
           style={{
-            visibility: props.isSelected === true ? 'visible' : 'hidden'
+            visibility: props.isSelected === true ? "visible" : "hidden",
           }}
         >
           <div
-            className='card-body text-center'
-            style={{ textAlign: 'center' }}
+            className="card-body text-center"
+            style={{ textAlign: "center" }}
           >
             <p
-              className='card-title font-italic'
-              style={{ fontSize: '2rem', fontWeight: 900 }}
+              className="card-title font-italic"
+              style={{ fontSize: "2rem", fontWeight: 900 }}
             >
-              Stock Not Found!!!
+              ⚠️ Stock Not Found!!! ⚠️
             </p>
-            <p
-              className='font-weight-normal'
-              style={{ fontSize: '1.75rem', fontWeight: 500 }}
-            >
-              Somehow the fields you submitted can't be found in our data.
-            </p>
-            <p style={{ fontSize: '1.5rem' }} className='font-weight-light'>
-              Try another stock
+         
+            <p style={{ fontSize: "1.5rem" }} className="font-weight-light">
+              Maybe, try another stock...
             </p>
           </div>
         </div>
       </>
-    )
+    );
   }
-}
+};
 
-function App (props) {
-  console.log(props)
+function App(props) {
+  console.log(props);
 
   return (
     <>
-      <div>
-        <ProductTable
-          scrolled={props.scrolled}
-          products={props.data}
-          isSelected={props.isSelected}
-        />
-      </div>
+      <ProductTable
+        scrolled={props.scrolled}
+        products={props.data}
+        isSelected={props.isSelected}
+      />
     </>
-  )
+  );
 }
 
 // { id: 1, name: 'Cheese', price: 4.9, stock: 20 },
@@ -419,18 +408,19 @@ function App (props) {
 //           { id: 6, name: 'Sour Cream ', price: 2.9, stock: 86 },
 //           { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
 
-function Options () {
-  const [inputStock, setInputStock] = useState('')
-  const [stock, setStock] = useState('Stock')
-  const [optionType, setOptionType] = useState('Type')
-  const [monthsToExpire, setMonthsToExpire] = useState('Months of Expiry')
-  const [investAmt, setInvestAmt] = useState('To Invest:')
-  const [scrolled, setScrolled] = useState(false)
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSelected, setIsSelected] = useState(false)
-  function submit (e) {
-    setIsLoading(true)
+function Options() {
+  const [inputStock, setInputStock] = useState("");
+  const [stock, setStock] = useState("Stock");
+  const [optionType, setOptionType] = useState("Type");
+  const [monthsToExpire, setMonthsToExpire] = useState("Months of Expiry");
+  const [investAmt, setInvestAmt] = useState("To Invest:");
+  const [scrolled, setScrolled] = useState(false);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [enterPressedTicker, setEnterPressedTicker] = useState(false);
+  function submit(e) {
+    setIsLoading(true);
     //     setStock('aapl');
     // setOptionType('call');
     // setMonthsToExpire(2);
@@ -439,167 +429,191 @@ function Options () {
     // var optionType = 'call';
     // var monthsToExpire = 2;
     // var investAmt = 1000;
-    e.preventDefault()
+    e.preventDefault();
 
-    async function fetchData () {
+    async function fetchData() {
       var url = `https://rh4wkswlnj.execute-api.us-east-2.amazonaws.com/test/yahoo_option?stock=${stock.toLowerCase()}&option_type=${optionType
-        .split(' Option')[0]
+        .split(" Option")[0]
         .toLowerCase()}&months_to_expire=${parseInt(
-        monthsToExpire.split(' Month')[0]
-      )}&to_invest=${parseInt(investAmt.split('$')[1])}`
-      console.log(url)
-      const response2 = await fetch(url)
-      const data2 = await response2.json()
+        monthsToExpire.split(" Month")[0]
+      )}&to_invest=${parseInt(investAmt.split("$")[1])}`;
+      console.log(url);
+      const response2 = await fetch(url);
+      const data2 = await response2.json();
       //   setIsLoading(false)
-      return data2
+      return data2;
     }
-    ;(async () => {
-      console.log(await fetchData())
-      setData(await fetchData())
+    (async () => {
+      console.log(await fetchData());
+      setData(await fetchData());
       // console.log(data)
-      console.log(data)
-      setIsLoading(false)
-      setIsSelected(true)
-    })()
+      console.log(data);
+      setIsLoading(false);
+      setIsSelected(true);
+    })();
   }
 
   // submit();
 
-  document.title = 'Stock Options'
+  document.title = "Stock Options";
   window.scroll(function () {
-    setScrolled(true)
-  })
+    setScrolled(true);
+  });
 
   return (
     <>
-      <div className='container'>
+      <div className="container-options">
         <h1
-          className='mt-4'
-          style={({ textDecorationLine: 'underline' }, { fontWeight: 'bold' })}
+          className="mt-4"
+          style={({ textDecorationLine: "underline" }, { fontWeight: "bold" })}
         >
           Stock Options:
         </h1>
         {/* <!-- Example split danger button --> */}
         {/* <BasicExample /> */}
-        <div className='d-flex justify-content-center'>
+        <div className="d-flex justify-content-center">
           {/* <Col xs lg='8'> */}
           <form onSubmit={submit}>
-            <Dropdown style={{ display: 'inline' }}>
+            <Dropdown style={{ display: "inline" }} onClick={(e) => {setEnterPressedTicker(false)}}>
               <Dropdown.Toggle
-                variant={stock === 'Stock' ? 'outline-info' : 'info'}
-                id='dropdown-basic'
+                variant={stock === "Stock" ? "outline-info" : "info"}
+                id="dropdown-basic"
+                
               >
                 {stock}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
+              <Dropdown.Menu style={{display: enterPressedTicker == false || stock === "Stock" ? '' : 'none'}}>
                 <input
                   autoFocus
-                  onChange={e => setInputStock(e.target.value.toUpperCase())}
+                  onChange={(e) => setInputStock(e.target.value.toUpperCase())}
                   value={inputStock}
-                  style={{ textAlign: 'left' }}
-                  className='mx-3 my-2 w-auto form-control text-info'
-                  placeholder='Type ticker to filter...'
+                  onKeyDown={(e) => {
+
+                    if(e.key == 'Enter') {
+                      setStock(inputStock)
+                      setEnterPressedTicker(true)
+                    }
+                  }}
+                  style={{ textAlign: "left" }}
+                  className="mx-3 my-2 w-auto form-control text-info"
+                  placeholder="Type ticker to filter..."
                 />
-                {filter(inputStock, stocks).map(stockName => (
+                {filter(inputStock, stocks).map((stockName) => (
                   <Dropdown.Item
-                    href=''
-                    onClick={e => {
-                      setStock(e.target.innerText)
-                    }}
-                    type='button'
-                    className='text-info'
-                  >
-                    {stockName}
-                  </Dropdown.Item>
+                  
+                  href=""
+                  onClick={(e) => {
+                    if (stockName === '...') {
+                      setEnterPressedTicker(false)
+
+                    }
+                    else {
+                      setStock(e.target.innerText);
+                    }
+                      
+                   
+                    
+                  }}
+                  type="button"
+                  className={`${stockName ==='...' ? 'text-secondary disabled' : 'text-info'}`}
+                  
+                >
+                  {stockName}
+                </Dropdown.Item>
                 ))}
+                 
+
+                
               </Dropdown.Menu>
             </Dropdown>
-            <Dropdown className='m-2' style={{ display: 'inline' }}>
+            <Dropdown className="m-2" style={{ display: "inline" }}>
               <Dropdown.Toggle
                 variant={
-                  optionType === 'Type' ? 'outline-secondary' : 'secondary'
+                  optionType === "Type" ? "outline-secondary" : "secondary"
                 }
-                id='dropdown-basic'
+                id="dropdown-basic"
               >
                 {optionType}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {['Call Option', 'Put Option', 'Any Option'].map(stockName => (
-                  <>
-                    <Dropdown.Item
-                      href=''
-                      className='text-secondary'
-                      onClick={e => {
-                        setOptionType(e.target.innerText)
-                      }}
-                    >
-                      {stockName}
-                    </Dropdown.Item>
-                    {/* <span>"Option Type"</span> */}
-                  </>
-                ))}
+                {["Call Option", "Put Option", "Any Option"].map(
+                  (stockName) => (
+                    <>
+                      <Dropdown.Item
+                        href=""
+                        className="text-secondary"
+                        onClick={(e) => {
+                          setOptionType(e.target.innerText);
+                        }}
+                      >
+                        {stockName}
+                      </Dropdown.Item>
+                      {/* <span>"Option Type"</span> */}
+                    </>
+                  )
+                )}
               </Dropdown.Menu>
             </Dropdown>
-            <Dropdown className='m-2' style={{ display: 'inline' }}>
+            <Dropdown className="m-2" style={{ display: "inline" }}>
               <Dropdown.Toggle
                 variant={
-                  monthsToExpire === 'Months of Expiry'
-                    ? 'outline-success'
-                    : 'success'
+                  monthsToExpire === "Months of Expiry"
+                    ? "outline-success"
+                    : "success"
                 }
-                id='dropdown-basic'
+                id="dropdown-basic"
               >
                 {monthsToExpire}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu className='m-2'>
+              <Dropdown.Menu className="m-2">
                 {[
-                  '1 Month to Expire',
-                  '2 Months to Expire',
-                  '3 Months to Expire',
-                  '4 Months to Expire',
-                  '5 Months to Expire',
-                  '6 Months to Expire',
-                  '12 Months to Expire'
-                ].map(stockName => (
+                  "1 Month to Expire",
+                  "2 Months to Expire",
+                  "3 Months to Expire",
+                  "4 Months to Expire",
+                  "5 Months to Expire",
+                  "6 Months to Expire",
+                  "12 Months to Expire",
+                ].map((stockName) => (
                   <Dropdown.Item
-                    href=''
-                    onClick={e => {
-                      setMonthsToExpire(e.target.innerText)
+                    href=""
+                    onClick={(e) => {
+                      setMonthsToExpire(e.target.innerText);
                     }}
-                    className='text-success'
+                    className="text-success"
                   >
                     {stockName}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-            <Dropdown className='p-3' style={{ display: 'inline' }}>
+            <Dropdown className="p-3" style={{ display: "inline" }}>
               <Dropdown.Toggle
                 variant={
-                  investAmt === 'To Invest:' ? 'outline-warning' : 'warning'
+                  investAmt === "To Invest:" ? "outline-warning" : "warning"
                 }
-                id='dropdown-basic'
+                id="dropdown-basic"
               >
                 {investAmt}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu className='m-2'>
+              <Dropdown.Menu className="m-2">
                 {[
-                  'Invest $500',
-                  'Invest $1000',
-                  'Invest $2000',
-                  'Invest $5000',
-                  'Invest $10000'
-                ].map(stockName => (
+                  "Invest $500",
+                  "Invest $1000",
+                  "Invest $2000",
+                  "Invest $5000",
+                  "Invest $10000",
+                ].map((stockName) => (
                   <Dropdown.Item
-                    href=''
-                    onClick={e => {
-                      setInvestAmt(e.target.innerText)
+                    href=""
+                    onClick={(e) => {
+                      setInvestAmt(e.target.innerText);
                     }}
-                    className='text-warning'
+                    className="text-warning"
                   >
                     {stockName}
                   </Dropdown.Item>
@@ -607,24 +621,24 @@ function Options () {
               </Dropdown.Menu>
             </Dropdown>
             <button
-              type='submit'
-              className='btn btn-primary submit-btn'
+              type="submit"
+              className="btn btn-primary submit-btn"
               disabled={
-                stock === 'Stock' ||
-                optionType === 'Type' ||
-                monthsToExpire === 'Months of Expiry' ||
-                investAmt === 'To Invest:'
+                stock === "Stock" ||
+                optionType === "Type" ||
+                monthsToExpire === "Months of Expiry" ||
+                investAmt === "To Invest:"
                   ? true
                   : false
               }
             >
-              Submit!{' '}
-            </button>{' '}
+              Submit!{" "}
+            </button>{" "}
             <Spinner
-              animation='border'
-              variant='primary'
-              className='mt-3'
-              style={{ visibility: isLoading === true ? 'visible' : 'hidden' }}
+              animation="border"
+              variant="primary"
+              className="mt-3"
+              style={{ visibility: isLoading === true ? "visible" : "hidden" }}
             />
           </form>
           {/* </Col> */}
@@ -632,7 +646,7 @@ function Options () {
         <App data={data} isSelected={isSelected} scrolled={scrolled} />
       </div>
     </>
-  )
+  );
 }
 
-export default Options
+export default Options;

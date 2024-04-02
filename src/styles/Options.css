@@ -1,7 +1,14 @@
 table {
-  /* width: 100%; */
-  border-collapse: collapse;
+  max-width: 50%;
+  border: none;
+  border-spacing: 0;
+  /* text-align: left; */
+  overflow-x: hidden;
 }
+
+/* .container-options {
+  width: 100%;
+} */
 
 thead th {
   text-align: left;
@@ -54,6 +61,10 @@ tbody tr:hover {
 }
 
 tbody tr {
+  /* text-align: center; */
+}
+
+td {
   text-align: center;
 }
 
