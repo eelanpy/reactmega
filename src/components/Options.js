@@ -577,6 +577,7 @@ function Options() {
                   "5 Months to Expire",
                   "6 Months to Expire",
                   "12 Months to Expire",
+                  "24 Months to Expire"
                 ].map((stockName) => (
                   <Dropdown.Item
                     href=""
