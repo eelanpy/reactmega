@@ -7,6 +7,7 @@ import Weather from "./components/Weather";
 import Movies from "./components/Movies";
 import Options from "./components/Options";
 import Login from "./components/Login";
+import Test from "./components/Test"
 import MathematicaTestOnline from "./components/Mathematica Test";
 import DashboardMathematica from "./components/DashboardMathematica";
 import Container from "react-bootstrap/Container";
@@ -27,6 +28,7 @@ const links = [
   ["Mathematica", <MathematicaTestOnline />, false],
   ["Dashboard", <DashboardMathematica />, false],
    ["ApiTester", <ApiTester />, false],
+   ["Test", <Test />, false]
 ];
 
 const App = () => (

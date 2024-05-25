@@ -414,6 +414,7 @@ function Options() {
   const [optionType, setOptionType] = useState("Type");
   const [monthsToExpire, setMonthsToExpire] = useState("Months of Expiry");
   const [investAmt, setInvestAmt] = useState("To Invest:");
+  const [optionCost, setOptionCost] = useState("Option Cost Included?:");
   const [scrolled, setScrolled] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -436,7 +437,7 @@ function Options() {
         .split(" Option")[0]
         .toLowerCase()}&months_to_expire=${parseInt(
         monthsToExpire.split(" Month")[0]
-      )}&to_invest=${parseInt(investAmt.split("$")[1])}`;
+      )}&to_invest=${parseInt(investAmt.split("$")[1])}&options_cost=${optionCost.split(': ')[1]}`;
       console.log(url);
       const response2 = await fetch(url);
       const data2 = await response2.json();
@@ -621,6 +622,35 @@ function Options() {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
+            <Dropdown className="m-2" style={{ display: "inline" }}>
+              <Dropdown.Toggle
+                variant={
+                  optionCost === "Option Cost Included?:" ? "outline-danger" : "danger"
+                }
+                id="dropdown-basic"
+              >
+                {optionCost}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {["Yes", "No"].map(
+                  (decision) => (
+                    <>
+                      <Dropdown.Item
+                        href=""
+                        className= {decision == "No" ? "text-danger" : 'text-success'}
+                        onClick={(e) => {
+                          setOptionCost(`Option Cost?: ${decision}`);
+                        }}
+                      >
+                        {decision}
+                      </Dropdown.Item>
+                      {/* <span>"Option Type"</span> */}
+                    </>
+                  )
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
             <button
               type="submit"
               className="btn btn-primary submit-btn"
@@ -628,7 +658,8 @@ function Options() {
                 stock === "Stock" ||
                 optionType === "Type" ||
                 monthsToExpire === "Months of Expiry" ||
-                investAmt === "To Invest:"
+                investAmt === "To Invest:" ||
+                optionCost === "Option Cost Included?:"
                   ? true
                   : false
               }
