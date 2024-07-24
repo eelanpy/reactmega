@@ -51,7 +51,13 @@ function ElectronicUseTracker() {
             className={`form-control ${name.length >= 1 ? "name-entered" : ""}`}
             value={name}
             placeholder="First and Last Name: "
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              let value = e.target.value;
+
+              value = value.replace(/[^A-Za-z]/gi, "");
+
+              setName(value);
+            }}
             onKeyDown={(e) => {
               console.log(e.key);
               // putData(e, name);
@@ -121,7 +127,10 @@ function ElectronicUseTracker() {
               <input
                 autoFocus={true}
                 onChange={(e) => {
-                  setInputTask(e.target.value);
+                  let value = e.target.value;
+
+                  value = value.replace(/[^A-Za-z]/gi, "");
+                  setInputTask(value);
                 }}
                 disabled={clicked}
                 value={inputTask}
