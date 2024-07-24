@@ -21,7 +21,10 @@
     background-color: #0dcaf0;
     border: 1px solid #ced4da;
     border-width: 1px 0;
-    opacity: 1
+    opacity: 0.75;
+    color: #495057;
+    
+
     
     
 }
@@ -30,6 +33,7 @@
     
     background-color: white    ;
     border:1px solid #ced4da;
+
 
 
 }
@@ -44,9 +48,10 @@
 
 
 .name-entered:disabled {
-    background-color: #0dcaf0    ;
     
-}
+    background-color: #0dcaf0;
+    color: #495057;
+    opacity: 0.75}
 
 
 
@@ -67,3 +72,9 @@ input {
 .form-control::-ms-input-placeholder { /* Microsoft Edge */
     color: red;
 }
+
+/* .btn-outline-primary:disabled {
+    background-color: #007bff;
+    color: white;
+
+} */

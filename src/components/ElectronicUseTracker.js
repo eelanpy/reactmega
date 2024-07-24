@@ -131,7 +131,7 @@ function ElectronicUseTracker() {
           
           </span>
           </div>
-          <button className="btn btn-outline-primary mt-2" disabled={name.length >=1 && task !== "" && task !== "Task:" && time.length >= 1 && clicked==false ? false: true} onClick={(e) => {
+          <button className="btn btn-primary mt-2" disabled={name.length >=1 && task !== "" && task !== "Task:" && time.length >= 1 && clicked==false ? false: true} onClick={(e) => {
             setClicked(true);
             putData(name, time, task)
           }}>Add Task!</button>
