@@ -123,6 +123,7 @@ const ProductTable = (props) => {
                   {key.toUpperCase().includes("PROFIT_") === true
                     ? "With_" + parseFloat(key.split("_")[1]) * 100 + "%"
                     : key.toUpperCase()}
+                  
                 </button>
               </th>
             ))}
@@ -625,7 +626,7 @@ function Options() {
             <Dropdown className="m-2" style={{ display: "inline" }}>
               <Dropdown.Toggle
                 variant={
-                  optionCost === "Option Cost Included?:" ? "outline-danger" : "danger"
+                  optionCost === "Option Cost Included?:"  ? "outline-dark" : optionCost === "Option Cost?: Yes" ? "success" : "danger"
                 }
                 id="dropdown-basic"
               >

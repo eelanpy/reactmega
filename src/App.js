@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Test from "./components/Test"
 import MathematicaTestOnline from "./components/Mathematica Test";
 import DashboardMathematica from "./components/DashboardMathematica";
+import ElectronicUseTracker from "./components/ElectronicUseTracker";
 import Container from "react-bootstrap/Container";
 import ApiTester from './components/ApiTester'
 import Navbar from "react-bootstrap/Navbar";
@@ -28,7 +29,8 @@ const links = [
   ["Mathematica", <MathematicaTestOnline />, false],
   ["Dashboard", <DashboardMathematica />, false],
    ["ApiTester", <ApiTester />, false],
-   ["Test", <Test />, false]
+   ["Test", <Test />, false],
+   ["Electronic Tracker", <ElectronicUseTracker />, false]
 ];
 
 const App = () => (

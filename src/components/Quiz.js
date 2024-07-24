@@ -135,7 +135,7 @@ function putData(id, answers,exam_name, exam_year, percentage) {
   };
 
   fetch(
-    "https://bc85o4egqi.execute-api.us-east-2.amazonaws.com/test/DynamoDBManager",
+    "https://zyxzfxyw48.execute-api.us-east-2.amazonaws.com/test",
     requestOptions
   )
     .then((response) => response.text())
