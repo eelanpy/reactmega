@@ -24,9 +24,7 @@ function DashboardMathematica(props) {
 
         var requestOptions = {
           method: "POST",
-          
-          
-         
+
           body: raw,
         };
         async function fetchSubmissions() {
@@ -116,8 +114,6 @@ function DashboardMathematica(props) {
       >
         <thead>
           <tr>
-            
-
             <th scope="col" className=" text-center">
               Student
             </th>
@@ -145,8 +141,16 @@ function DashboardMathematica(props) {
               <td>{submissions[1][idx]["dt"]}</td>
 
               <td>{submissions[1][idx]["exam_year"]}</td>
-              <td>{capitalizeFirstLetter(submissions[1][idx]["exam_name"].split('_')[0])}</td>
-              <td>{capitalizeFirstLetter(submissions[1][idx]["exam_name"].split('_')[1])}</td>
+              <td>
+                {capitalizeFirstLetter(
+                  submissions[1][idx]["exam_name"].split("_")[0]
+                )}
+              </td>
+              <td>
+                {capitalizeFirstLetter(
+                  submissions[1][idx]["exam_name"].split("_")[1]
+                )}
+              </td>
               <td>{submissions[1][idx]["mark"]}</td>
             </tr>
           ))}

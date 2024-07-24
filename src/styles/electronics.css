@@ -1,80 +1,52 @@
 #dropdown-basic.task-entered {
-    
-    color: black;
-    border:1px solid #ced4da;
-    
+  color: black;
+  border: 1px solid #ced4da;
 }
 
 #dropdown-basic.task-not-entered {
-    color:#6c757d;
-    border:1px solid #ced4da;
+  color: #6c757d;
+  border: 1px solid #ced4da;
 }
-
-/* .task-entered.dropdown:disabled {
-    background-color:black;
-    border: 1px solid #ced4da;
-    border-width: 1px 0;
-} */
 
 #dropdown-basic:disabled {
-    
-    background-color: #0dcaf0;
-    border: 1px solid #ced4da;
-    border-width: 1px 0;
-    opacity: 0.75;
-    color: #495057;
-    
-
-    
-    
+  background-color: #0dcaf0;
+  border: 1px solid #ced4da;
+  border-width: 1px 0;
+  opacity: 0.75;
+  color: #495057;
 }
 
-.dropdown-toggle.btn.btn-outline-info:hover,.dropdown-toggle.btn.btn-outline-info:focus {
-    
-    background-color: white    ;
-    border:1px solid #ced4da;
-
-
-
+.dropdown-toggle.btn.btn-outline-info:hover,
+.dropdown-toggle.btn.btn-outline-info:focus {
+  background-color: white;
+  border: 1px solid #ced4da;
 }
-
-
 
 .name-entered {
-    background-color: #0dcaf0    ;
+  background-color: #0dcaf0;
 }
-
-
-
 
 .name-entered:disabled {
-    
-    background-color: #0dcaf0;
-    color: #495057;
-    opacity: 0.75}
-
-
+  background-color: #0dcaf0;
+  color: #495057;
+  opacity: 0.75;
+}
 
 input {
-     color: black;
+  color: black;
 }
-
 
 .form-control::placeholder {
-    color: gray;
-    opacity: 1; 
+  color: gray;
+  opacity: 1;
 }
 
-.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: red;
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: red;
 }
 
-.form-control::-ms-input-placeholder { /* Microsoft Edge */
-    color: red;
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: red;
 }
-
-/* .btn-outline-primary:disabled {
-    background-color: #007bff;
-    color: white;
-
-} */

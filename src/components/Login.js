@@ -1,83 +1,76 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React from "react";
+import { useState, useEffect } from "react";
 
+import { Container, PopoverHeader, Row } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { Tab } from "react-bootstrap";
+import { Tabs } from "react-bootstrap";
+import { Col } from "react-bootstrap";
+import { Overlay } from "react-bootstrap";
+import { Popover } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/login.css";
 
-import { Container, PopoverHeader, Row } from 'react-bootstrap'
-import { Modal } from 'react-bootstrap'
-import { Form } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
-import { Tab } from 'react-bootstrap'
-import { Tabs } from 'react-bootstrap'
-import { Col } from 'react-bootstrap'
-import { Overlay } from 'react-bootstrap'
-import { Popover } from 'react-bootstrap'
-import { ListGroup } from 'react-bootstrap'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import '../styles/login.css'
-
-
-
-
-
-function getType (type) {
-  return type === 'password' ? 'text' : 'password'
+function getType(type) {
+  return type === "password" ? "text" : "password";
 }
 
-function Login () {
-  const [meals, setMeals] = useState([])
+function Login() {
+  const [meals, setMeals] = useState([]);
 
-  
-  var currentSearchResult = 'example'
+  var currentSearchResult = "example";
 
-
-  const [type, setType] = useState('password')
+  const [type, setType] = useState("password");
   const [show, setShow] = useState(
-    localStorage.getItem('email') !== '' &&
-      localStorage.getItem('email') !== null &&
-      localStorage.getItem('password') !== '' &&
-      localStorage.getItem('password') !== null
+    localStorage.getItem("email") !== "" &&
+      localStorage.getItem("email") !== null &&
+      localStorage.getItem("password") !== "" &&
+      localStorage.getItem("password") !== null
       ? false
       : true
-  )
+  );
   const [focused, setFocused] = useState(false);
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState(
-    localStorage.getItem('email') !== null ? localStorage.getItem('email') : ''
-  )
+    localStorage.getItem("email") !== null ? localStorage.getItem("email") : ""
+  );
   const [pwd, setPwd] = useState(
-    localStorage.getItem('password') !== null
-      ? localStorage.getItem('password')
-      : ''
-  )
+    localStorage.getItem("password") !== null
+      ? localStorage.getItem("password")
+      : ""
+  );
 
-  function submit (e) {
-    e.preventDefault()
+  function submit(e) {
+    e.preventDefault();
 
-    localStorage.setItem('email', email)
-    localStorage.setItem('password', pwd)
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", pwd);
     if (/(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{4,8}/.test(pwd) !== true) {
-      handleShow()
-      localStorage.setItem('logged', false)
+      handleShow();
+      localStorage.setItem("logged", false);
     } else {
-      handleClose()
-      localStorage.setItem('logged', true)
+      handleClose();
+      localStorage.setItem("logged", true);
     }
 
-    console.log(email)
-    console.log(pwd)
-    if (email.includes('@') === false) {
-      handleShow()
+    console.log(email);
+    console.log(pwd);
+    if (email.includes("@") === false) {
+      handleShow();
     }
   }
 
-  if (localStorage.getItem('logged') === false) {
-    handleShow()
+  if (localStorage.getItem("logged") === false) {
+    handleShow();
   }
   return (
     <>
@@ -86,18 +79,17 @@ function Login () {
           show={show}
           onHide={handleClose}
           animation={true}
-          backdrop='static'
+          backdrop="static"
           keyboard={false}
-          className='mb-0 pb-0'
+          className="mb-0 pb-0"
         >
           <Tabs
-            defaultActiveKey='sign-up'
-            id='uncontrolled-tab-example'
-            className='mb-3'
+            defaultActiveKey="sign-up"
+            id="uncontrolled-tab-example"
+            className="mb-3"
             justify
-            
           >
-            <Tab eventKey='sign-up' title='Sign Up'>
+            <Tab eventKey="sign-up" title="Sign Up">
               <Modal.Header>
                 <Modal.Title>Sign Up</Modal.Title>
               </Modal.Header>
@@ -105,24 +97,24 @@ function Login () {
                 <Form onSubmit={submit}>
                   <Form.Group
                     as={Row}
-                    className='mb-3'
-                    controlId='exampleForm.ControlInput1'
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
                   >
                     {/* <Form.Label>Email address</Form.Label> */}
-                    <Form.Label column sm='2' for='floatingInputCustom'>
+                    <Form.Label column sm="2" for="floatingInputCustom">
                       Email:
                     </Form.Label>
-                    <Col sm='10'>
+                    <Col sm="10">
                       <Form.Control
                         required={true}
-                        className='form-control'
-                        id='floatingInputCustom'
-                        type='email'
-                        placeholder='name@example.com'
+                        className="form-control"
+                        id="floatingInputCustom"
+                        type="email"
+                        placeholder="name@example.com"
                         autoFocus
-                        onChange={e => {
-                          setEmail(e.target.value)
-                          localStorage.setItem('email', e.target.value)
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          localStorage.setItem("email", e.target.value);
                         }}
                         value={email}
                       />
@@ -130,76 +122,76 @@ function Login () {
                   </Form.Group>
                   <Form.Group
                     as={Row}
-                    className='mb-3'
-                    controlId='exampleForm.ControlInput1'
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
                   >
-                    <Form.Label column sm='3' for='floatingInputCustom2'>
+                    <Form.Label column sm="3" for="floatingInputCustom2">
                       Password:
                     </Form.Label>
-                    <Col sm='8'>
+                    <Col sm="8">
                       <Form.Control
                         required={true}
-                        className='form-control password w-75'
-                        id='floatingInputCustom2'
-                        type='password'
-                        placeholder='Ex@123'
+                        className="form-control password w-75"
+                        id="floatingInputCustom2"
+                        type="password"
+                        placeholder="Ex@123"
                         autoFocus
-                        onChange={e => {
-                          setPwd(e.target.value)
-                          localStorage.setItem('password', e.target.value)
+                        onChange={(e) => {
+                          setPwd(e.target.value);
+                          localStorage.setItem("password", e.target.value);
                         }}
                         value={pwd}
                         style={{
-                          display: 'inline-block',
-                          borderRadius: '0.25rem 0 0 0.25rem'
+                          display: "inline-block",
+                          borderRadius: "0.25rem 0 0 0.25rem",
                         }}
-                        onFocus={onFocus} 
+                        onFocus={onFocus}
                         onBlur={onBlur}
                       />
                       <Button
-                        variant='outline-primary'
-                        onClick={e => {
-                          setType('text')
-                          document.querySelector('.password').type = getType(
-                            document.querySelector('.password').type
-                          )
+                        variant="outline-primary"
+                        onClick={(e) => {
+                          setType("text");
+                          document.querySelector(".password").type = getType(
+                            document.querySelector(".password").type
+                          );
                         }}
                         style={{
-                          borderRadius: '0 0.25rem 0.25rem 0',
-                          lineHeight: 1.5
+                          borderRadius: "0 0.25rem 0.25rem 0",
+                          lineHeight: 1.5,
                         }}
                       >
                         <i
                           class={
-                            document.querySelector('.password') == 'password'
-                              ? 'bi bi-eye-slash'
-                              : 'bi bi-eye'
+                            document.querySelector(".password") == "password"
+                              ? "bi bi-eye-slash"
+                              : "bi bi-eye"
                           }
                         ></i>
                       </Button>
                     </Col>
                     <Col>
-                      <Overlay show={focused} placement='bottom'>
+                      <Overlay show={focused} placement="bottom">
                         <Popover>
-                          <PopoverHeader as='h3'>Password Requirements:</PopoverHeader>
+                          <PopoverHeader as="h3">
+                            Password Requirements:
+                          </PopoverHeader>
                           <Popover.Body style={{ padding: 0 }}>
                             <ListGroup as="ol" numbered>
                               <ListGroup.Item
-                                style={{ borderRadius: 0, borderTop: 'none' }}
+                                style={{ borderRadius: 0, borderTop: "none" }}
                                 variant={
                                   /(?=.*[A-Z])/.test(pwd) == true
-                                    ? 'success'
-                                    : 'danger'
+                                    ? "success"
+                                    : "danger"
                                 }
                               >
                                 Must have at least 1 uppercase.
                               </ListGroup.Item>
                               <ListGroup.Item
-                                style={{ borderRadius: 0, borderTop: 'none' }}
+                                style={{ borderRadius: 0, borderTop: "none" }}
                                 variant={
-                                  /\d/.test(pwd) == true
-                                    ? 'success'
-                                    : 'danger'
+                                  /\d/.test(pwd) == true ? "success" : "danger"
                                 }
                               >
                                 Must have at least 1 number.
@@ -208,34 +200,33 @@ function Login () {
                               <ListGroup.Item
                                 variant={
                                   /(?=.*[a-z])/.test(pwd) == true
-                                    ? 'success'
-                                    : 'danger'
+                                    ? "success"
+                                    : "danger"
                                 }
                               >
-                                Must have at least 1 lowercase
-                                letter.
+                                Must have at least 1 lowercase letter.
                               </ListGroup.Item>
                               <ListGroup.Item
                                 variant={
                                   /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(
                                     pwd
                                   ) == true
-                                    ? 'success'
-                                    : 'danger'
+                                    ? "success"
+                                    : "danger"
                                 }
                               >
                                 Must have at least 1 symbol.
                               </ListGroup.Item>
                               <ListGroup.Item
-                                variant={pwd.length >= 4 ? 'success' : 'danger'}
+                                variant={pwd.length >= 4 ? "success" : "danger"}
                               >
                                 Must have more than 4 characters.
                               </ListGroup.Item>
                               <ListGroup.Item
                                 variant={
                                   pwd.length < 8 && pwd.length >= 4
-                                    ? 'success'
-                                    : 'danger'
+                                    ? "success"
+                                    : "danger"
                                 }
                               >
                                 Must have less than 8 characters.
@@ -245,8 +236,8 @@ function Login () {
                         </Popover>
                       </Overlay>
                     </Col>
-                    <Modal.Footer className='border-0'>
-                      <Button variant='primary' type='submit'>
+                    <Modal.Footer className="border-0">
+                      <Button variant="primary" type="submit">
                         Login
                       </Button>
                     </Modal.Footer>
@@ -254,103 +245,105 @@ function Login () {
                 </Form>
               </Modal.Body>
             </Tab>
-            <Tab eventKey='Login' title='Login'>
+            <Tab eventKey="Login" title="Login">
               Tab content for Home
             </Tab>
           </Tabs>
         </Modal>
 
         <Container
-          fluid='true'
+          fluid="true"
           style={{
-            alignItems: 'center',
+            alignItems: "center",
             visibility:
-              localStorage.getItem('email') !== '' &&
-              localStorage.getItem('email') !== null &&
-              localStorage.getItem('password') !== '' &&
-              localStorage.getItem('password') !== null &&
-              localStorage.getItem('logged') == 'true' &&
+              localStorage.getItem("email") !== "" &&
+              localStorage.getItem("email") !== null &&
+              localStorage.getItem("password") !== "" &&
+              localStorage.getItem("password") !== null &&
+              localStorage.getItem("logged") == "true" &&
               show == false
-                ? 'visible'
-                : 'hidden'
+                ? "visible"
+                : "hidden",
           }}
-        > 
-          <h2 className='my-3 fw-bold' style={{textDecoration: 'underline'}}>Account Details:</h2>
+        >
+          <h2 className="my-3 fw-bold" style={{ textDecoration: "underline" }}>
+            Account Details:
+          </h2>
 
-          <Row className='justify-content-md-center mb-2'>
-            <Col xs lg='10'>
-              <form onSubmit={submit} className='input-group'>
+          <Row className="justify-content-md-center mb-2">
+            <Col xs lg="10">
+              <form onSubmit={submit} className="input-group">
                 <Button
                   style={{
-                    borderTopLeftRadius: '.25rem',
-                    borderWidth: 'medium'
+                    borderTopLeftRadius: ".25rem",
+                    borderWidth: "medium",
                   }}
-                  variant='outline-secondary'
+                  variant="outline-secondary"
                   disabled
-                  className='text-black fw-bold'
+                  className="text-black fw-bold"
                 >
                   Email:
                 </Button>
                 <Form.Control
-                  className='form-control text-wrap'
-                  id='floatingInputCustom2'
-                  type='email'
-                  placeholder='name@example.com'
+                  className="form-control text-wrap"
+                  id="floatingInputCustom2"
+                  type="email"
+                  placeholder="name@example.com"
                   autoFocus
-                  onChange={e => {
-                    e.currentTarget.width = e.target.value.length + 'ch'
-                    setEmail(e.target.value)
-                    localStorage.setItem('email', e.target.value)
+                  onChange={(e) => {
+                    e.currentTarget.width = e.target.value.length + "ch";
+                    setEmail(e.target.value);
+                    localStorage.setItem("email", e.target.value);
                   }}
                   value={
-                    localStorage.getItem('email') !== null &&
-                    localStorage.getItem('email') !== ''
-                      ? localStorage.getItem('email')
-                      : ''
+                    localStorage.getItem("email") !== null &&
+                    localStorage.getItem("email") !== ""
+                      ? localStorage.getItem("email")
+                      : ""
                   }
                   disabled
-                />{' '}
-                <Button variant='outline-primary' onClick={handleShow}>
-                  <i class='bi bi-pencil-square'></i>
+                />{" "}
+                <Button variant="outline-primary" onClick={handleShow}>
+                  <i class="bi bi-pencil-square"></i>
                 </Button>
               </form>
             </Col>
           </Row>
-          <Row className='justify-content-md-center mb-2'>
-            <Col xs lg='10'>
-              <form onSubmit={submit} className='input-group'>
+          <Row className="justify-content-md-center mb-2">
+            <Col xs lg="10">
+              <form onSubmit={submit} className="input-group">
                 <Button
                   style={{
-                    borderTopLeftRadius: '.25rem',
-                    borderWidth: 'medium'
+                    borderTopLeftRadius: ".25rem",
+                    borderWidth: "medium",
                   }}
-                  variant='outline-secondary'
-                  className='fw-bold text-black'
+                  variant="outline-secondary"
+                  className="fw-bold text-black"
                   disabled
                 >
                   Password:
                 </Button>
                 <Form.Control
-                  className='form-control text-wrap'
-                  id='floatingInputCustom'
-                  type='password'
-                  placeholder='name@example.com'
+                  className="form-control text-wrap"
+                  id="floatingInputCustom"
+                  type="password"
+                  placeholder="name@example.com"
                   autoFocus
-                  onChange={e => {
-                    e.currentTarget.width = e.target.value.length + 'ch'
-                    setEmail(e.target.value)
-                    localStorage.setItem('email', e.target.value)
+                  onChange={(e) => {
+                    e.currentTarget.width = e.target.value.length + "ch";
+                    setEmail(e.target.value);
+                    localStorage.setItem("email", e.target.value);
                   }}
                   value={
-                    localStorage.getItem('password') !== null &&
-                    localStorage.getItem('password') !== ''
-                      ? localStorage.getItem('password')
-                      : ''
+                    localStorage.getItem("password") !== null &&
+                    localStorage.getItem("password") !== ""
+                      ? localStorage.getItem("password")
+                      : ""
                   }
                   disabled
                 />
-                <Button variant='outline-primary' onClick={handleShow}>
-                  <i class='bi bi-pencil-square'></i>
+                <Button variant="outline-primary" onClick={handleShow}>
+                  <i class="bi bi-pencil-square"></i>
                 </Button>
               </form>
             </Col>
@@ -361,6 +354,6 @@ function Login () {
         </Container>
       </div>
     </>
-  )
+  );
 }
-export default Login
+export default Login;

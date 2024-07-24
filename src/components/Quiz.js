@@ -19,8 +19,8 @@ import { Controller, useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/mathematica.css";
 
-import { useState, useLayoutEffect} from "react";
-import { useLocation } from 'react-router-dom';
+import { useState, useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 
@@ -70,21 +70,21 @@ function checkAnswer(submittedData, correctAnswers, props) {
   //
 
   function generateCorrectAnswers(answers) {
-    var correctQuestions = {}
-    for(let i = 0; i<Object.keys(answers).length; i++) {
-        correctQuestions[i+1] = "IC"
+    var correctQuestions = {};
+    for (let i = 0; i < Object.keys(answers).length; i++) {
+      correctQuestions[i + 1] = "IC";
     }
     return correctQuestions;
-}
+  }
 
-const correctQuestions = generateCorrectAnswers(correctAnswers)
+  const correctQuestions = generateCorrectAnswers(correctAnswers);
   var mark = 0;
   console.log(props);
   // function generateQuestions(correctAnswers) {
   //   const correctQuestions = {};
   //   for(let i = 0; )
   // }
-  
+
   for (let i of Object.keys(submittedData)) {
     if (submittedData[i] == correctAnswers[i]) {
       mark++;
@@ -109,20 +109,18 @@ const correctQuestions = generateCorrectAnswers(correctAnswers)
   };
 }
 
-function putData(id, answers,exam_name, exam_year, percentage) {
-
-  
+function putData(id, answers, exam_name, exam_year, percentage) {
   var raw = JSON.stringify({
     operation: "create",
     payload: {
       Item: {
         id: id,
         answers: answers,
-        dt: id.split('-').splice(1,).join('-'),
+        dt: id.split("-").splice(1).join("-"),
         exam_name: exam_name,
         exam_year: `${String(exam_year)}`,
         mark: `${String(percentage)}%`,
-        student: id.split('-')[0],
+        student: id.split("-")[0],
       },
     },
   });
@@ -174,18 +172,14 @@ function Quiz(props) {
 
   const { control, handleSubmit } = useForm();
   const location = useLocation();
-  
-    useLayoutEffect(() => {
-      if(quizDone == true) {
-        window.scroll(0,0);
-      }
-    }, [location.pathname]);
-  
-  
+
+  useLayoutEffect(() => {
+    if (quizDone == true) {
+      window.scroll(0, 0);
+    }
+  }, [location.pathname]);
+
   const onSubmit = (data) => {
-
-
-
     console.log(data);
     setMark(checkAnswer(data, correctAnswers, props).mark);
 
@@ -195,21 +189,23 @@ function Quiz(props) {
     var d = new Date();
     d.setSeconds(0, 0);
     d.toISOString();
-    
-    
 
-    let id = props.student.toLowerCase() + '-' + d.toISOString();
-    id = id.toLowerCase()
+    let id = props.student.toLowerCase() + "-" + d.toISOString();
+    id = id.toLowerCase();
     console.log(id);
-    putData(id, checkAnswer(data, correctAnswers, props).correctQuestions, `${props.exam.toLowerCase()}_${props.examType.toLowerCase()}`, props.year, checkAnswer(data, correctAnswers, props).percentage)
-
+    putData(
+      id,
+      checkAnswer(data, correctAnswers, props).correctQuestions,
+      `${props.exam.toLowerCase()}_${props.examType.toLowerCase()}`,
+      props.year,
+      checkAnswer(data, correctAnswers, props).percentage
+    );
   };
 
   const columns = [...cols, { id: 1, name: "?", label: "?" }];
 
   const rows = createRows(props.exam, props.examType, props.year);
   return (
-
     <div
       className="App"
       style={{
@@ -218,12 +214,20 @@ function Quiz(props) {
       }}
     >
       <div class="input-group  w-25 m-0 m-auto">
-  <span class="input-group-text" id="inputGroup-sizing-default">Student:</span>
-  <input type="text" className="form-control bg-white w-25  text-start" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readOnly value={props.student}/>
-</div>
-      
+        <span class="input-group-text" id="inputGroup-sizing-default">
+          Student:
+        </span>
+        <input
+          type="text"
+          className="form-control bg-white w-25  text-start"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+          readOnly
+          value={props.student}
+        />
+      </div>
+
       <form action="#retr" onSubmit={handleSubmit(onSubmit)} className="mt-4">
-      
         <Table id="quiz">
           <TableHead>
             <TableRow>
@@ -282,7 +286,11 @@ function Quiz(props) {
       </form>
       <h1 style={{ display: quizDone !== true ? "none" : "inline" }}>
         Marks: {mark}/{numberOfQns} <br />
-        <Button onClick={playAgain} variant="primary " className="btn quiz-again-btn">
+        <Button
+          onClick={playAgain}
+          variant="primary "
+          className="btn quiz-again-btn"
+        >
           Retry Quiz <i class="bi bi-arrow-clockwise"></i>
         </Button>
       </h1>

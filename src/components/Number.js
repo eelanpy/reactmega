@@ -84,7 +84,10 @@ function LetUserPick(props) {
               onChange={(e) => store(e)}
               value={guess}
               disabled={correctGuess ? true : false}
-              style={{ visibility: props.isChecked ? "visible" : "hidden", textAlign: "left" }}
+              style={{
+                visibility: props.isChecked ? "visible" : "hidden",
+                textAlign: "left",
+              }}
               ref={myRef}
             />
             {/* This is alert to tell user if low or high:  */}

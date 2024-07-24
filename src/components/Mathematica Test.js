@@ -1,26 +1,25 @@
-
 import { Dropdown } from "react-bootstrap";
 import { useState } from "react";
 
 import Quiz from "./Quiz";
-import DashboardMathematica from './DashboardMathematica'
+import DashboardMathematica from "./DashboardMathematica";
 import "../styles/mathematica.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 function MathematicaTestOnline() {
   document.title = "Mathematica";
 
-  const [student, setStudent] = useState("" )
+  const [student, setStudent] = useState("");
   const [exam, setExam] = useState("Exam Name:");
   const [examType, setExamType] = useState("Exam Type:");
   const [year, setYear] = useState("Year:");
   const [quizStarted, setQuizStarted] = useState(false);
-  const [studentEntered, setStudentEntered] = useState(false)
+  const [studentEntered, setStudentEntered] = useState(false);
 
-  function studentEvent(e){
+  function studentEvent(e) {
     console.log(e);
-    if(e.key == 'Enter') {
-      e.preventDefault()
-      setStudentEntered(true)
+    if (e.key == "Enter") {
+      e.preventDefault();
+      setStudentEntered(true);
       console.log(studentEntered);
     }
   }
@@ -35,7 +34,8 @@ function MathematicaTestOnline() {
     if (
       exam !== "Exam Name:" &&
       examType !== "Exam Type:" &&
-      year !== "Year:" && student !== ""
+      year !== "Year:" &&
+      student !== ""
     ) {
       setQuizStarted(true);
     } else {
@@ -44,7 +44,6 @@ function MathematicaTestOnline() {
   }
   return (
     <div className="mt-5">
-         
       <h2 style={{ textDecoration: "underline" }} className="text-primary mb-4">
         <strong>
           {quizStarted == true
@@ -62,13 +61,28 @@ function MathematicaTestOnline() {
         </strong>{" "}
         Pick an Exam you would want to practice:{" "}
       </h3>
-      <input style={{display: quizStarted == true ? 'none' : 'inline', width: "15%", textAlign: 'left'}}placeholder="Student Name:" className="form-control mr-2 " value={student} onChange={(e) => {setStudent(e.target.value)}} onKeyDown={(e) => {studentEvent(e)}}/>
+      <input
+        style={{
+          display: quizStarted == true ? "none" : "inline",
+          width: "15%",
+          textAlign: "left",
+        }}
+        placeholder="Student Name:"
+        className="form-control mr-2 "
+        value={student}
+        onChange={(e) => {
+          setStudent(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          studentEvent(e);
+        }}
+      />
       {/* <DashboardQuiz student={student}/> */}
 
-      
       <Dropdown
         style={{
-          display: quizStarted == true || studentEntered == false ? "none" : "inline",
+          display:
+            quizStarted == true || studentEntered == false ? "none" : "inline",
         }}
         className="mr-2"
       >
@@ -95,7 +109,8 @@ function MathematicaTestOnline() {
       </Dropdown>
       <Dropdown
         style={{
-          display: quizStarted == true  || studentEntered == false? "none" : "inline",
+          display:
+            quizStarted == true || studentEntered == false ? "none" : "inline",
         }}
       >
         <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
@@ -120,7 +135,8 @@ function MathematicaTestOnline() {
       </Dropdown>
       <Dropdown
         style={{
-          display: quizStarted == true || studentEntered == false? "none" : "inline",
+          display:
+            quizStarted == true || studentEntered == false ? "none" : "inline",
         }}
         className="rounded-left"
       >
@@ -153,14 +169,21 @@ function MathematicaTestOnline() {
         onClick={submittedForm}
         className={quizStarted == false ? "btn btn-outline-info mt-4" : "mt-0"}
         disabled={
-          exam == "Exam Name:" || year == "Year:" || examType == "Exam Type:" || student == "" ? true : false
+          exam == "Exam Name:" ||
+          year == "Year:" ||
+          examType == "Exam Type:" ||
+          student == ""
+            ? true
+            : false
         }
-        style={{ display: quizStarted == true || studentEntered == false ? "none" : "" }}
+        style={{
+          display: quizStarted == true || studentEntered == false ? "none" : "",
+        }}
       >
         Start Quiz!
       </button>
       <br />
-      
+
       <Quiz
         quizStarted={quizStarted}
         examType={examType}
@@ -169,8 +192,6 @@ function MathematicaTestOnline() {
         year={year}
         student={student}
       />
-            
-
     </div>
   );
 }

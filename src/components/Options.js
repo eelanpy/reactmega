@@ -14,30 +14,22 @@ var stocks = tickers;
 
 function filter(inputStock, listStocks) {
   console.log(listStocks);
-  
-  
-  var filteredStocks = []
-  
 
-  
-    for (let i = 0; i < listStocks.length; i++) {
-      
-      if (
-        listStocks[i].toLowerCase().startsWith(inputStock.toLowerCase()) ===
-        true
-      ) {
-        
-        filteredStocks.push(listStocks[i]);
+  var filteredStocks = [];
 
-      }
+  for (let i = 0; i < listStocks.length; i++) {
+    if (
+      listStocks[i].toLowerCase().startsWith(inputStock.toLowerCase()) === true
+    ) {
+      filteredStocks.push(listStocks[i]);
     }
-  if (inputStock === '') {
-    var filteredStocks = listStocks.slice(0,10);
-    filteredStocks.push('...')
-    return filteredStocks
+  }
+  if (inputStock === "") {
+    var filteredStocks = listStocks.slice(0, 10);
+    filteredStocks.push("...");
+    return filteredStocks;
   }
   return filteredStocks.length < 1 ? [] : filteredStocks;
-
 }
 
 // async function fetchTicks () {
@@ -123,7 +115,6 @@ const ProductTable = (props) => {
                   {key.toUpperCase().includes("PROFIT_") === true
                     ? "With_" + parseFloat(key.split("_")[1]) * 100 + "%"
                     : key.toUpperCase()}
-                  
                 </button>
               </th>
             ))}
@@ -376,7 +367,7 @@ Expiry            </button>
             >
               ⚠️ Stock Not Found!!! ⚠️
             </p>
-         
+
             <p style={{ fontSize: "1.5rem" }} className="font-weight-light">
               Maybe, try another stock...
             </p>
@@ -438,7 +429,9 @@ function Options() {
         .split(" Option")[0]
         .toLowerCase()}&months_to_expire=${parseInt(
         monthsToExpire.split(" Month")[0]
-      )}&to_invest=${parseInt(investAmt.split("$")[1])}&options_cost=${optionCost.split(': ')[1]}`;
+      )}&to_invest=${parseInt(investAmt.split("$")[1])}&options_cost=${
+        optionCost.split(": ")[1]
+      }`;
       console.log(url);
       const response2 = await fetch(url);
       const data2 = await response2.json();
@@ -476,25 +469,35 @@ function Options() {
         <div className="d-flex justify-content-center">
           {/* <Col xs lg='8'> */}
           <form onSubmit={submit}>
-            <Dropdown style={{ display: "inline" }} onClick={(e) => {setEnterPressedTicker(false)}}>
+            <Dropdown
+              style={{ display: "inline" }}
+              onClick={(e) => {
+                setEnterPressedTicker(false);
+              }}
+            >
               <Dropdown.Toggle
                 variant={stock === "Stock" ? "outline-info" : "info"}
                 id="dropdown-basic"
-                
               >
                 {stock}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{display: enterPressedTicker == false || stock === "Stock" ? '' : 'none'}}>
+              <Dropdown.Menu
+                style={{
+                  display:
+                    enterPressedTicker == false || stock === "Stock"
+                      ? ""
+                      : "none",
+                }}
+              >
                 <input
                   autoFocus
                   onChange={(e) => setInputStock(e.target.value.toUpperCase())}
                   value={inputStock}
                   onKeyDown={(e) => {
-
-                    if(e.key == 'Enter') {
-                      setStock(inputStock)
-                      setEnterPressedTicker(true)
+                    if (e.key == "Enter") {
+                      setStock(inputStock);
+                      setEnterPressedTicker(true);
                     }
                   }}
                   style={{ textAlign: "left" }}
@@ -503,30 +506,24 @@ function Options() {
                 />
                 {filter(inputStock, stocks).map((stockName) => (
                   <Dropdown.Item
-                  
-                  href=""
-                  onClick={(e) => {
-                    if (stockName === '...') {
-                      setEnterPressedTicker(false)
-
-                    }
-                    else {
-                      setStock(e.target.innerText);
-                    }
-                      
-                   
-                    
-                  }}
-                  type="button"
-                  className={`${stockName ==='...' ? 'text-secondary disabled' : 'text-info'}`}
-                  
-                >
-                  {stockName}
-                </Dropdown.Item>
+                    href=""
+                    onClick={(e) => {
+                      if (stockName === "...") {
+                        setEnterPressedTicker(false);
+                      } else {
+                        setStock(e.target.innerText);
+                      }
+                    }}
+                    type="button"
+                    className={`${
+                      stockName === "..."
+                        ? "text-secondary disabled"
+                        : "text-info"
+                    }`}
+                  >
+                    {stockName}
+                  </Dropdown.Item>
                 ))}
-                 
-
-                
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown className="m-2" style={{ display: "inline" }}>
@@ -579,7 +576,7 @@ function Options() {
                   "5 Months to Expire",
                   "6 Months to Expire",
                   "12 Months to Expire",
-                  "24 Months to Expire"
+                  "24 Months to Expire",
                 ].map((stockName) => (
                   <Dropdown.Item
                     href=""
@@ -626,7 +623,11 @@ function Options() {
             <Dropdown className="m-2" style={{ display: "inline" }}>
               <Dropdown.Toggle
                 variant={
-                  optionCost === "Option Cost Included?:"  ? "outline-dark" : optionCost === "Option Cost?: Yes" ? "success" : "danger"
+                  optionCost === "Option Cost Included?:"
+                    ? "outline-dark"
+                    : optionCost === "Option Cost?: Yes"
+                    ? "success"
+                    : "danger"
                 }
                 id="dropdown-basic"
               >
@@ -634,22 +635,22 @@ function Options() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {["Yes", "No"].map(
-                  (decision) => (
-                    <>
-                      <Dropdown.Item
-                        href=""
-                        className= {decision == "No" ? "text-danger" : 'text-success'}
-                        onClick={(e) => {
-                          setOptionCost(`Option Cost?: ${decision}`);
-                        }}
-                      >
-                        {decision}
-                      </Dropdown.Item>
-                      {/* <span>"Option Type"</span> */}
-                    </>
-                  )
-                )}
+                {["Yes", "No"].map((decision) => (
+                  <>
+                    <Dropdown.Item
+                      href=""
+                      className={
+                        decision == "No" ? "text-danger" : "text-success"
+                      }
+                      onClick={(e) => {
+                        setOptionCost(`Option Cost?: ${decision}`);
+                      }}
+                    >
+                      {decision}
+                    </Dropdown.Item>
+                    {/* <span>"Option Type"</span> */}
+                  </>
+                ))}
               </Dropdown.Menu>
             </Dropdown>
             <button

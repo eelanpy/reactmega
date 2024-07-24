@@ -14,7 +14,6 @@ nav {
   text-align: left;
   background: #ee9972;
   /* padding: 20px; */
-  
 }
 
 .navbar-toggler {
@@ -79,7 +78,7 @@ input {
 }
 
 .border-success:disabled {
-  background: 'green'
+  background: "green";
 }
 
 img {
@@ -87,7 +86,7 @@ img {
 }
 
 body {
-  font-family: 'open sans', sans-serif;
+  font-family: "open sans", sans-serif;
   font-size: 16px;
 }
 
@@ -100,18 +99,18 @@ body {
 }
 
 a:hover {
-  color: #87CEEB;
-  
+  color: #87ceeb;
+
   text-decoration: none;
 }
 
 a.active {
-  color: #87CEEB;
-} 
+  color: #87ceeb;
+}
 
-.navbar-toggler:active, 
-.navbar-toggler:hover, 
-.navbar-toggler:focus  {
-  border: 1px solid rgba(0,0,0, 0.15);
+.navbar-toggler:active,
+.navbar-toggler:hover,
+.navbar-toggler:focus {
+  border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: none;
 }

@@ -7,12 +7,12 @@ import Weather from "./components/Weather";
 import Movies from "./components/Movies";
 import Options from "./components/Options";
 import Login from "./components/Login";
-import Test from "./components/Test"
+import Test from "./components/Test";
 import MathematicaTestOnline from "./components/Mathematica Test";
 import DashboardMathematica from "./components/DashboardMathematica";
 import ElectronicUseTracker from "./components/ElectronicUseTracker";
 import Container from "react-bootstrap/Container";
-import ApiTester from './components/ApiTester'
+import ApiTester from "./components/ApiTester";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
@@ -25,12 +25,12 @@ const links = [
   ["Weather App", <Weather />, false],
   ["Box Office", <Movies />, false],
   ["Stock Options", <Options />, false],
-  
+
   ["Mathematica", <MathematicaTestOnline />, false],
   ["Dashboard", <DashboardMathematica />, false],
-   ["ApiTester", <ApiTester />, false],
-   ["Test", <Test />, false],
-   ["Electronic Tracker", <ElectronicUseTracker />, false]
+  ["ApiTester", <ApiTester />, false],
+  ["Test", <Test />, false],
+  ["Electronic Tracker", <ElectronicUseTracker />, false],
 ];
 
 const App = () => (

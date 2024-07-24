@@ -91,9 +91,7 @@ function Render(props) {
                   }}
                 >
                   <strong className="card-title" style={{ fontSize: "2rem" }}>
-                    {word[1] === ""
-                      ? "Movie Not Found!"
-                      : word[0] + ":"}
+                    {word[1] === "" ? "Movie Not Found!" : word[0] + ":"}
                   </strong>
 
                   {word[1] === "" ? (
@@ -170,8 +168,6 @@ function Movies() {
     async function fetchData() {
       var matched = [];
 
-      
-
       var url2 =
         "https://c5r5fokuj3.execute-api.us-east-2.amazonaws.com/movies?url=test" +
         "&name=" +
@@ -230,7 +226,7 @@ function Movies() {
                 value={movie}
                 onChange={(e) => change(e)}
                 autoFocus
-                style={{textAlign: 'left'}}
+                style={{ textAlign: "left" }}
               />
               {/* <div className="input-group-append"> */}
               <button
