@@ -8,7 +8,7 @@ import Movies from "./components/Movies";
 import Options from "./components/Options";
 import Login from "./components/Login";
 import Test from "./components/Test";
-import MathematicaTestOnline from "./components/Mathematica Test";
+import Quiz from "./components/Quiz";
 import DashboardMathematica from "./components/DashboardMathematica";
 import ElectronicUseTracker from "./components/ElectronicUseTracker";
 import Container from "react-bootstrap/Container";
@@ -26,7 +26,7 @@ const links = [
   ["Box Office", <Movies />, false],
   ["Stock Options", <Options />, false],
 
-  ["Mathematica", <MathematicaTestOnline />, false],
+  ["Mathematica", <Quiz />, false],
   ["Dashboard", <DashboardMathematica />, false],
   ["ApiTester", <ApiTester />, false],
   ["Test", <Test />, false],

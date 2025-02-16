@@ -1,305 +1,231 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Radio from "@mui/material/Radio";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import React, { useState } from "react";
+import "../styles/QuizTable.css";
 import answers from "../dataFiles/answers.json";
 
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableRow,
-//   Radio
-import React from "react";
-import ReactDOM from "react-dom";
-import { Controller, useForm } from "react-hook-form";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/mathematica.css";
-
-import { useState, useLayoutEffect } from "react";
-import { useLocation } from "react-router-dom";
-
-import { Button } from "react-bootstrap";
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-var dataToJson = {};
-
-console.log(answers);
-
-function createRows(exam, examType, year) {
-  try {
-    const numberOfQns = Object.keys(
-      answers[
-        `${capitalizeFirstLetter(exam)}-${capitalizeFirstLetter(
-          examType
-        )}-${String(year)}`
-      ]
-    ).length;
-    const rows = [];
-    var idCounter = 1;
-    for (let i = 0; i < numberOfQns; i++) {
-      const row = {
-        id: idCounter,
-        name: `${String(idCounter)}`,
-        label: `${String(idCounter)}`,
-      };
-      idCounter = idCounter + 1;
-      rows.push(row);
-    }
-    return rows;
-  } catch {
-    return [];
-  }
-}
-
-const cols = [
-  { id: 1, name: "A", label: "A" },
-  { id: 2, name: "B", label: "B" },
-  { id: 3, name: "C", label: "C" },
-  { id: 4, name: "D", label: "D" },
-  { id: 5, name: "E", label: "E" },
-];
-
-function checkAnswer(submittedData, correctAnswers, props) {
-  //
-
-  function generateCorrectAnswers(answers) {
-    var correctQuestions = {};
-    for (let i = 0; i < Object.keys(answers).length; i++) {
-      correctQuestions[i + 1] = "IC";
-    }
-    return correctQuestions;
-  }
-
-  const correctQuestions = generateCorrectAnswers(correctAnswers);
-  var mark = 0;
-  console.log(props);
-  // function generateQuestions(correctAnswers) {
-  //   const correctQuestions = {};
-  //   for(let i = 0; )
-  // }
-
-  for (let i of Object.keys(submittedData)) {
-    if (submittedData[i] == correctAnswers[i]) {
-      mark++;
-      console.log(i);
-      correctQuestions[i] = "C";
-    }
-  }
-  console.log(correctQuestions);
-
-  var d = new Date();
-  d.setSeconds(0, 0);
-  d.toISOString();
-  const nOfQuestions = Object.keys(correctQuestions).length;
-  const percentage = parseInt(Math.round((mark / nOfQuestions) * 100));
-
-  console.log(percentage);
-  console.log(typeof props);
-  return {
-    mark: mark,
-    correctQuestions: correctQuestions,
-    percentage: percentage,
-  };
-}
-
-function putData(id, answers, exam_name, exam_year, percentage) {
-  var raw = JSON.stringify({
-    operation: "create",
-    payload: {
-      Item: {
-        id: id,
-        answers: answers,
-        dt: id.split("-").splice(1).join("-"),
-        exam_name: exam_name,
-        exam_year: `${String(exam_year)}`,
-        mark: `${String(percentage)}%`,
-        student: id.split("-")[0],
-      },
-    },
+export default function Quiz() {
+  const [examStarted, setExamStarted] = useState(false);
+  const [examDetails, setExamDetails] = useState({
+    examName: "",
+    examType: "",
+    examYear: "",
+    userName: "",
   });
+  
+  // Example options (Modify as needed)
+  const examNames = ["Thales", "Euler"];
+  const examTypes = ["Prepatory", "Contest"];
+  const examYears = ["2014", "2016", "2017", "2018", "2019", "2020" , "2021", "2022", "2023"];
 
-  var requestOptions = {
-    method: "POST",
-    body: raw,
-    redirect: "follow",
-    mode: "no-cors",
+  const handleInputChange = (e) => {
+    setExamDetails({ ...examDetails, [e.target.name]: e.target.value });
   };
 
-  fetch(
-    "https://zyxzfxyw48.execute-api.us-east-2.amazonaws.com/test",
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
-}
-
-function Quiz(props) {
-  let correctAnswers;
-  try {
-    correctAnswers =
-      answers[
-        `${capitalizeFirstLetter(props.exam)}-${capitalizeFirstLetter(
-          props.examType
-        )}-${String(props.year)}`
-      ];
-  } catch {
-    correctAnswers = {};
-  }
-  var numberOfQns = 0;
-  try {
-    numberOfQns = Object.keys(
-      answers[
-        `${capitalizeFirstLetter(props.exam)}-${capitalizeFirstLetter(
-          props.examType
-        )}-${String(props.year)}`
-      ]
-    ).length;
-  } catch {
-    numberOfQns = 0;
-  }
-
-  const [correctQs, setCorrectQs] = useState([]);
-  const [mark, setMark] = useState(0);
-  const [quizDone, setDoneQuiz] = useState(false);
-
-  const { control, handleSubmit } = useForm();
-  const location = useLocation();
-
-  useLayoutEffect(() => {
-    if (quizDone == true) {
-      window.scroll(0, 0);
+  const startExam = () => {
+    if (!examDetails.examName || !examDetails.examType || !examDetails.examYear || !examDetails.userName) {
+      alert("Please fill in all exam details before starting.");
+      return;
     }
-  }, [location.pathname]);
+    setExamStarted(true);
+  };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setMark(checkAnswer(data, correctAnswers, props).mark);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [count, setCount] = useState(0);
 
-    setCorrectQs(checkAnswer(data, correctAnswers, props).correctQuestions);
-    setDoneQuiz(true);
-    checkAnswer(data, correctAnswers, props);
+  const examFullName = `${examDetails.examName}-${examDetails.examType}-${examDetails.examYear}`;
+  
+  const quizData = answers[examFullName] ? answers[examFullName] : [];
+
+  const handleChange = (number, value) => {
+    setUserAnswers({ ...userAnswers, [number]: value });
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    let correctCount = 0;
+    quizData.forEach(({ number, answer }) => {
+      userAnswers[number] = userAnswers[number] ? userAnswers[number] : "-"
+      console.log(userAnswers);
+      if (userAnswers[number] === answer) {
+        correctCount++;
+      }
+    });
     var d = new Date();
     d.setSeconds(0, 0);
     d.toISOString();
-
-    let id = props.student.toLowerCase() + "-" + d.toISOString();
+    let id = examDetails.userName.toLowerCase() + "-" + d.toISOString();
     id = id.toLowerCase();
     console.log(id);
-    putData(
-      id,
-      checkAnswer(data, correctAnswers, props).correctQuestions,
-      `${props.exam.toLowerCase()}_${props.examType.toLowerCase()}`,
-      props.year,
-      checkAnswer(data, correctAnswers, props).percentage
-    );
+    setCount(correctCount);
+    const percentage = Math.round(count/Object.keys(userAnswers).length * 100)
+    putData(id, userAnswers, `${examDetails.examName.toLowerCase()}_${examDetails.examType.toLowerCase()}`,examDetails.examYear,  percentage)
+
   };
-
-  const columns = [...cols, { id: 1, name: "?", label: "?" }];
-
-  const rows = createRows(props.exam, props.examType, props.year);
+  function putData(id, answers, exam_name, exam_year, percentage) {
+    var raw = JSON.stringify({
+      operation: "create",
+      payload: {
+        Item: {
+          id: id,
+          answers: answers,
+          dt: id.split("-").splice(1).join("-"),
+          exam_name: exam_name,
+          exam_year: `${String(exam_year)}`,
+          mark: `${String(percentage)}%`,
+          student: id.split("-")[0],
+        },
+      },
+    });
+  
+    var requestOptions = {
+      method: "POST",
+      body: raw,
+      redirect: "follow",
+      mode: "no-cors",
+    };
+  
+    fetch(
+      "https://zyxzfxyw48.execute-api.us-east-2.amazonaws.com/test",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
   return (
-    <div
-      className="App"
-      style={{
-        visibility: props.quizStarted == true ? "visible" : "hidden",
-        paddingTop: 0,
-      }}
-    >
-      <div class="input-group  w-25 m-0 m-auto">
-        <span class="input-group-text" id="inputGroup-sizing-default">
-          Student:
-        </span>
+    <div className="p-6" style={{alignItems: "center", justifyContent: "center"}}>
+      <div className="exam-info">
+        <h2 className="text-xl font-bold mb-4">Enter Exam Details</h2>
+
+        {/* Dropdown for Exam Name */}
+        <select name="examName" value={examDetails.examName} onChange={handleInputChange} className="input-field">
+          <option value="">Select Exam Name</option>
+          {examNames.map((name) => (
+            <option key={name} value={name}>{name}</option>
+          ))}
+        </select>
+
+        {/* Dropdown for Exam Type */}
+        <select name="examType" value={examDetails.examType} onChange={handleInputChange} className="input-field">
+          <option value="">Select Exam Type</option>
+          {examTypes.map((type) => (
+            <option key={type} value={type}>{type}</option>
+          ))}
+        </select>
+
+        {/* Dropdown for Exam Year */}
+        <select name="examYear" value={examDetails.examYear} onChange={handleInputChange} className="input-field">
+          <option value="">Select Exam Year</option>
+          {examYears.map((year) => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
+
+        {/* Input for User Name */}
         <input
           type="text"
-          className="form-control bg-white w-25  text-start"
-          aria-label="Sizing example input"
-          aria-describedby="inputGroup-sizing-default"
-          readOnly
-          value={props.student}
+          name="userName"
+          placeholder="Your Name"
+          value={examDetails.userName}
+          onChange={handleInputChange}
+          className="input-field"
+          style={{textAlign: "left"}}
         />
+
+        {/* Start Exam Button */}
+        <button onClick={startExam} className="start-button" disabled={!examDetails.examName || !examDetails.examType || !examDetails.examYear || !examDetails.userName}>
+          Start Exam
+        </button>
       </div>
 
-      <form action="#retr" onSubmit={handleSubmit(onSubmit)} className="mt-4">
-        <Table id="quiz">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              {columns.map(({ id, label }) => (
-                <TableCell
-                  key={id}
-                  align="center"
-                  style={{ color: "#0074d9", fontSize: "1.5rem" }}
-                >
-                  {label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(({ id, name, label }) => (
-              <TableRow key={id}>
-                <TableCell style={{ fontSize: "1.5rem", background: "#eee" }}>
-                  {label}
-                </TableCell>
-                <Controller
-                  name={name}
-                  control={control}
-                  render={({ field: { value, ...field } }) =>
-                    columns.map(({ id, name: optionName }) => (
-                      <TableCell key={id}>
-                        <Radio
-                          {...field}
-                          className="quiz-radio"
-                          checked={value === optionName}
-                          value={optionName}
-                          style={{
-                            color:
-                              quizDone == false || value !== optionName
-                                ? "#17a2b8"
-                                : correctAnswers[label] == optionName
-                                ? "green"
-                                : "red",
-                          }}
-                          disabled={quizDone !== true ? false : true}
-                        />
-                      </TableCell>
-                    ))
-                  }
-                />
-              </TableRow>
+      <h2 className="text-xl font-bold mb-4" style={{margin: "2rem"}}>{examFullName}</h2>
+
+      {/* Quiz Table */}
+      {examStarted && quizData.length > 0 && (
+        <table className="w-full border-collapse border border-gray-300" style={{alignItems: "center", justifyContent: "center"}}>
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 p-2" style={{textAlign: "center"}}>Number:</th>
+              <th className="border border-gray-300 p-2" style={{textAlign: "center"}}>Options:</th>            </tr>
+          </thead>
+          <tbody>
+            {quizData.map(({ number, options, answer }) => (
+              <tr key={number} className="border border-gray-300">
+                <td className="border border-gray-300 p-2 text-center">{number}</td>
+                <td className="border border-gray-300 p-2">
+                  {options.map((option) => (
+                    <label key={option} className="inline-flex items-center mr-4" style={{ margin: "1rem" }}>
+                      <span
+                        className={`${
+                          submitted && option === answer && userAnswers[number] !== answer
+                            ? "text-green-600 font-bold"
+                            : submitted && userAnswers[number] !== answer && userAnswers[number] === option
+                            ? "text-red-600 font-bold"
+                            : ""
+                        }`}
+                        style={{ margin: "0.5rem" }}
+                      >
+                        {option}
+                      </span>
+                      <input
+                        type="radio"
+                        name={`question-${number}`}
+                        value={option}
+                        onChange={() => handleChange(number, option)}
+                        disabled={submitted}
+                        checked={userAnswers[number] === option}
+                        className={`mr-2 ${
+                          submitted && userAnswers[number] !== answer && userAnswers[number] === option
+                            ? "opacity-100"
+                            : ""
+                        }`}
+                      />
+                    </label>
+                  ))}
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
-        <input
-          type="submit"
-          id="submit"
-          disabled={quizDone !== true ? false : true}
-        />
-      </form>
-      <h1 style={{ display: quizDone !== true ? "none" : "inline" }}>
-        Marks: {mark}/{numberOfQns} <br />
-        <Button
-          onClick={playAgain}
-          variant="primary "
-          className="btn quiz-again-btn"
-        >
-          Retry Quiz <i class="bi bi-arrow-clockwise"></i>
-        </Button>
-      </h1>
+          </tbody>
+        </table>
+      )}
+
+      {/* Submit Button */}
+      {examStarted && (
+        <button onClick={handleSubmit} disabled={submitted} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400">
+          Submit
+        </button>
+      )}
+
+      {/* Results Section */}
+      {submitted && (
+        <div className="mt-6">
+          <h2 className="text-xl font-bold mb-4">Results</h2>
+          <h2>{Math.round((count / quizData.length) * 100)}%<br/><br/> {count} / {quizData.length}</h2>
+
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 p-2">Question:</th>
+                <th className="border border-gray-300 p-2">Your Answer:</th>
+                <th className="border border-gray-300 p-2">Correct Answer:</th>
+              </tr>
+            </thead>
+            <tbody>
+              {quizData.map(({ number, answer }) => (
+                <tr key={number} className="border border-gray-300">
+                  <td className="border border-gray-300 p-2 text-center">{number}</td>
+                  <td className={`border border-gray-300 p-2 text-center ${userAnswers[number] !== answer ? "bg-red-600 font-bold" : "font-bold bg-green-600"}`}>
+                    {userAnswers[number] ?? "-"}
+                  </td>
+                  <td className="border border-gray-300 p-2 text-center font-bold">
+                    {answer}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
-
-function playAgain(e) {
-  window.location.reload();
-}
-
-export default Quiz;
