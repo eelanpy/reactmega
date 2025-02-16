@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/QuizTable.css";
 import answers from "../dataFiles/answers.json";
+import  '../styles/QuizTable.css'
 
 export default function Quiz() {
   const [examStarted, setExamStarted] = useState(false);
@@ -93,9 +94,10 @@ export default function Quiz() {
       .catch((error) => console.log("error", error));
   }
   return (
-    <div className="p-6" style={{alignItems: "center", justifyContent: "center"}}>
+    // <div className="p-6 exam-div" style={{alignItems: "center", justifyContent: "center"}}>
+    <>
       <div className="exam-info">
-        <h2 className="text-xl font-bold mb-4">Enter Exam Details</h2>
+        <h2 className="text-xl font-bold mb-4" style={{marginTop: "2rem", marginBottom: "2rem"}}>Enter Exam Details</h2>
 
         {/* Dropdown for Exam Name */}
         <select name="examName" value={examDetails.examName} onChange={handleInputChange} className="input-field">
@@ -128,12 +130,12 @@ export default function Quiz() {
           placeholder="Your Name"
           value={examDetails.userName}
           onChange={handleInputChange}
-          className="input-field"
+          className="input-field user-name"
           style={{textAlign: "left"}}
         />
 
         {/* Start Exam Button */}
-        <button onClick={startExam} className="start-button" disabled={!examDetails.examName || !examDetails.examType || !examDetails.examYear || !examDetails.userName}>
+        <button onClick={startExam} className="start-button" disabled={!examDetails.examName || !examDetails.examType || !examDetails.examYear || !examDetails.userName || examStarted}>
           Start Exam
         </button>
       </div>
@@ -142,16 +144,16 @@ export default function Quiz() {
 
       {/* Quiz Table */}
       {examStarted && quizData.length > 0 && (
-        <table className="w-full border-collapse border border-gray-300" style={{alignItems: "center", justifyContent: "center"}}>
+        <table className="w-full border-collapse border border-gray-300 quiz-table" style={{alignItems: "center", justifyContent: "center"}}>
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-300 p-2" style={{textAlign: "center"}}>Number:</th>
-              <th className="border border-gray-300 p-2" style={{textAlign: "center"}}>Options:</th>            </tr>
+              <th className="border border-gray-300 p-2" style={{textAlign: "left"}}>Question:</th>
+              <th className="border border-gray-300 p-2" style={{textAlign: "left"}}>Options:</th>            </tr>
           </thead>
           <tbody>
             {quizData.map(({ number, options, answer }) => (
               <tr key={number} className="border border-gray-300">
-                <td className="border border-gray-300 p-2 text-center">{number}</td>
+                <td className="border border-gray-300 text-center number-td">{number}</td>
                 <td className="border border-gray-300 p-2">
                   {options.map((option) => (
                     <label key={option} className="inline-flex items-center mr-4" style={{ margin: "1rem" }}>
@@ -191,7 +193,7 @@ export default function Quiz() {
 
       {/* Submit Button */}
       {examStarted && (
-        <button onClick={handleSubmit} disabled={submitted} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400">
+        <button onClick={handleSubmit} disabled={submitted} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 submit-btn">
           Submit
         </button>
       )}
@@ -202,7 +204,7 @@ export default function Quiz() {
           <h2 className="text-xl font-bold mb-4">Results</h2>
           <h2>{Math.round((count / quizData.length) * 100)}%<br/><br/> {count} / {quizData.length}</h2>
 
-          <table className="w-full border-collapse border border-gray-300">
+          <table className="w-full border-collapse border border-gray-300 result-table">
             <thead>
               <tr className="bg-gray-200">
                 <th className="border border-gray-300 p-2">Question:</th>
@@ -213,19 +215,24 @@ export default function Quiz() {
             <tbody>
               {quizData.map(({ number, answer }) => (
                 <tr key={number} className="border border-gray-300">
-                  <td className="border border-gray-300 p-2 text-center">{number}</td>
-                  <td className={`border border-gray-300 p-2 text-center ${userAnswers[number] !== answer ? "bg-red-600 font-bold" : "font-bold bg-green-600"}`}>
+                  <td className="border border-gray-300 p-2 text-center" style={{width: "1%"}}>{number}</td>
+                  <td className={`border border-gray-300 p-2 text-center ${userAnswers[number] !== answer ? "bg-red-600" : "bg-green-600"}`}>
                     {userAnswers[number] ?? "-"}
                   </td>
-                  <td className="border border-gray-300 p-2 text-center font-bold">
+                  <td className="border border-gray-300" style={{textAlign: "center"}}>
                     {answer}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <button  onClick={playAgain} style={{margin: "2rem auto"}} disabled={submitted == true ? false : true}>{count/quizData.length * 100 <= 50 ? "Try Again" : "Try Another Quiz"}</button>
         </div>
       )}
-    </div>
+    </>
   );
+}
+
+function playAgain(e) {
+  window.location.reload();
 }

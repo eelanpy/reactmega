@@ -2,12 +2,20 @@
   font-family: sans-serif;
 }
 
+.container {
+  text-align: left;
+}
+
 nav {
   /* width: 300%; */
 }
 nav {
-  width: 100%;
+  width: 200%;
   height: 100%;
+  text-align: left;
+  margin: 0 auto;
+  margin-right: 0;
+  padding: 0;
 }
 
 nav {

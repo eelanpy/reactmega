@@ -2,9 +2,18 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
-    margin: 20px;
-    padding: 0;
+    /* margin: 20px; */
+    /* padding: 0; */
   }
+
+
+  .exam-info {
+    width: 25%;
+    margin: 0 auto;
+  }
+
+  
+
   
   /* Container */
   .p-6 {
@@ -22,9 +31,21 @@ body {
     margin-bottom: 1rem;
   }
   
-  /* Table styling */
-  table {
+  tr {
+    background-color: white;
+  }
+
+  tr.border.border-gray-300:hover {
+    background-color: white;
+  }
+
+  tr {
     width: 100%;
+  }
+
+  /* Table styling */
+  table.quiz-table, table.result-table {
+    width: 40%;
     border-collapse: collapse;
     margin-top: 10px;
     margin: 0 auto;
@@ -52,7 +73,7 @@ body {
   /* Buttons */
   button {
     display: block;
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -127,10 +148,15 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
+  .user-name {
+    margin-bottom: 2rem;
+  }
   
   /* Start Button */
-  .start-button {
-    width: 100%;
+  .start-button, .submit-btn {
+    /* width: 100%; */
+    margin: 0 auto;
     padding: 10px;
     background-color: #28a745;
     color: white;
@@ -144,3 +170,16 @@ body {
     margin-top: 2rem;
   }
   
+  .number-td {
+    padding: 0 0 ;
+    width: 1px;
+    text-align: left;
+  } 
+
+  td {
+    text-align: center;
+  }
+
+  table {
+    width: 0;
+  }

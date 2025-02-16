@@ -41,6 +41,7 @@ const App = () => (
       bg="primary"
       data-bs-theme="dark"
       // sticky='top'
+      
     >
       <Container>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
